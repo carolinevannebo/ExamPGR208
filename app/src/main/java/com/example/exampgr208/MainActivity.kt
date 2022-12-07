@@ -17,27 +17,6 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.Main){
             MainRepository().downloadAssetList()
         }
-        /*val assetHitsArray = (JSONObject(MainRepository.URL).get("hits") as JSONArray)
-
-        runBlocking{
-            println("test" + assetHitsArray.length())
-        }*/
     }
-
-    suspend fun myFun() {
-        GlobalScope.async {
-            val assetData = URL("https://api.edamam.com/api/recipes/v2?app_key=2ecd749eade96f92c4303affe954eb31&app_id=8efed005&type=public&q=all").readText()
-            val assetDataArray = (JSONObject(assetData.toString()).get("hits") as JSONArray)
-            Log.i("testing", assetDataArray.toString())
-        }.await()
-    }
-
-    /*@OptIn(DelicateCoroutinesApi::class)
-    suspend fun myFun() {
-        GlobalScope.async {
-            val assetHitsArray = (JSONObject(MainRepository.URL).get("hits") as JSONArray)
-            println("test" + assetHitsArray.length())
-        }
-    }*/
 
 }

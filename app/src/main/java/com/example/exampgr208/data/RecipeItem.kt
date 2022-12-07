@@ -1,6 +1,5 @@
 package com.example.exampgr208.data
 
-import android.support.v4.os.IResultReceiver
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
