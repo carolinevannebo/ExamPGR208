@@ -16,6 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExamPGR208"
         tools:targetApi="33">
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="com.example.exampgr208.androidx-startup"
+            tools:node="remove" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
