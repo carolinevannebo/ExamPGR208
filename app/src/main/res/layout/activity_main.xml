@@ -11,23 +11,26 @@
         android:id="@+id/logo_light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo_light"/>
+        android:src="@drawable/logo_light"
+        android:contentDescription="@string/app_name"/>
 
     <EditText
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="10dp"
-        android:textSize="20dp"
         android:layout_below="@+id/logo_light"
-        android:hint="Search recipe..."/>
+        android:hint="Search recipe..."
+        android:paddingHorizontal="10dp"
+        android:textColorHint="#8D6E63"
+        android:textSize="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"
-        android:layout_below="@+id/search_bar"/>
+        android:layout_below="@+id/search_bar"
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_bar"
