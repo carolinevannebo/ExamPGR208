@@ -4,7 +4,7 @@ import com.example.exampgr208.data.database.AppDatabase
 import com.example.exampgr208.data.ListWithRecipeLists
 import com.example.exampgr208.data.RecipeItem
 
-abstract class Recipes: AppDatabase() {
+abstract class Recipes: AppDatabase() { //dette er vel et DTO?
     val listsToCompare = mutableListOf<ListWithRecipeLists>()
 
     fun getRecipeLists(): List<ListWithRecipeLists> {

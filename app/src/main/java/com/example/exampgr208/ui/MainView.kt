@@ -5,5 +5,5 @@ import com.example.exampgr208.data.repository.MainRepository
 import com.example.exampgr208.data.repository.remote.WebService
 
 class MainView(preview: Boolean = false) : ViewModel() {
-    private val repository = MainRepository(WebService())
+    //private val repository = MainRepository(WebService())
 }

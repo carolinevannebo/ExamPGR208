@@ -9,7 +9,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class WebService {
 
-    private val api: Api by lazy { createApi() }
+    /*private val api: Api by lazy { createApi() }
 
     suspend fun getRecipes(): RecipeList {
         return api.getRecipes()
@@ -21,11 +21,10 @@ class WebService {
             .build()
 
         val retrofit = Retrofit.Builder()
-            //.baseUrl(MainRepository.URL)
-            .baseUrl(MainRepository.TEST_EXAMPLE_URL) // skal være URL ikke test, men skjønner ikke endepunktet
+            .baseUrl(MainRepository.URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
 
         return retrofit.create(Api::class.java)
-    }
+    }*/
 }
