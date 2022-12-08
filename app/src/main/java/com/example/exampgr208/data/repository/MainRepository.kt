@@ -27,10 +27,17 @@ class MainRepository {
                 val recipe = (assetItem as JSONObject).get("recipe")
 
                 hitsItem.uri = (recipe as JSONObject).getString("uri")
-                hitsItem.label = recipe.getString("label")
+                hitsItem.label = (recipe).getString("label")
+                //hitsItem.image = (recipe).getString("image")
                 hitsItem.source = recipe.getString("source")
                 hitsItem.url = recipe.getString("url")
+                hitsItem.yield = recipe.getInt("yield")
+                //hitsItem.dietLabels = (recipe).getJSONArray("dietLabels")
+                //hitsItem.healthLabels = (recipe).getJSONArray("healthLabels")
+                //hitsItem.cautions = (recipe).getJSONArray("cautions")
+                //hitsItem.ingredientLines = (recipe).getJSONArray("ingredientLines")
                 hitsItem.mealType = recipe.getString("mealType")
+                hitsItem.calories = recipe.getInt("calories")
 
                 allHits.add(hitsItem)
             }

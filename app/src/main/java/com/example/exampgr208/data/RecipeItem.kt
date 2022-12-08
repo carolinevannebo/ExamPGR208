@@ -11,17 +11,22 @@ import java.io.Serializable
 data class RecipeItem(
     @PrimaryKey @Json(name = "uri") override var uri: String? = null, // skal label være PK?
     @ColumnInfo(name = "label") override var label: String? = null, //mulig val må endres til var, null er vel bare default?
-    @ColumnInfo(name = "image") override val image: String? = null,
+    //@ColumnInfo(name = "image") override val image: String? = null,
     @ColumnInfo(name = "source") override var source: String? = null,
     @ColumnInfo(name = "url") override var url: String? = null,
-    @ColumnInfo(name = "ingredientLines") override var ingredientLines: MutableList<String>? = null,
-    @ColumnInfo(name = "mealType") override var mealType: String? = null
-) : IRecipe, Serializable { //du har lagt til override på alle val for at den skal kunne arve fra interface, og json etter PK
+    @ColumnInfo(name = "yield") override var yield: Int? = null,
+    //@ColumnInfo(name = "dietLabels") override var dietLabels: MutableList<String>? = null,
+    //@ColumnInfo(name = "healthLabels") override var healthLabels: MutableList<String>? = null,
+    //@ColumnInfo(name = "cautions") override var cautions: MutableList<String>? = null,
+    //@ColumnInfo(name = "ingredientLines") override var ingredientLines: MutableList<String>? = null,
+    @ColumnInfo(name = "mealType") override var mealType: String? = null,
+    @ColumnInfo(name = "calories") override var calories: Int? = null
+) : IRecipe, Serializable { //du har lagt til override på alle val for at den skal kunne arve fra interface
     override fun toString(): String {
         return "$label"
     }
 
-    fun ingredientLinesToString() : String {
+    /*fun ingredientLinesToString() : String {
         var string = ""
         if (ingredientLines != null) {
             for (line in this.ingredientLines!!) {
@@ -29,6 +34,6 @@ data class RecipeItem(
             }
         }
         return string
-    }
+    }*/
 
 }
