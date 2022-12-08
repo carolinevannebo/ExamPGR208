@@ -1,5 +1,6 @@
 package com.example.exampgr208.data.repository
 
+import android.graphics.BitmapFactory
 import android.util.Log
 import com.example.exampgr208.data.RecipeItem
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -28,7 +29,14 @@ class MainRepository {
 
                 hitsItem.uri = (recipe as JSONObject).getString("uri")
                 hitsItem.label = (recipe).getString("label")
-                //hitsItem.image = (recipe).getString("image")
+
+                val imgByteArray = URL((((recipe)
+                    .get("images") as JSONObject)
+                    .get("REGULAR") as JSONObject)
+                    .getString("url")).readBytes()
+                val image = BitmapFactory.decodeByteArray(imgByteArray, 0, imgByteArray.size)
+
+                hitsItem.image = image
                 hitsItem.source = recipe.getString("source")
                 hitsItem.url = recipe.getString("url")
                 hitsItem.yield = recipe.getInt("yield")
@@ -36,7 +44,13 @@ class MainRepository {
                 //hitsItem.healthLabels = (recipe).getJSONArray("healthLabels")
                 //hitsItem.cautions = (recipe).getJSONArray("cautions")
                 //hitsItem.ingredientLines = (recipe).getJSONArray("ingredientLines")
-                hitsItem.mealType = recipe.getString("mealType")
+                //hitsItem.mealType = recipe.getString("mealType")
+
+                val mealTypeArray = recipe.getJSONArray("mealType")
+                for (i in 0 until mealTypeArray.length()) {
+                    hitsItem.mealType = mealTypeArray.getString(i)
+                }
+
                 hitsItem.calories = recipe.getInt("calories")
 
                 allHits.add(hitsItem)

@@ -1,17 +1,19 @@
 package com.example.exampgr208.data
 
+import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.exampgr208.logic.interfaces.IRecipe
 import com.squareup.moshi.Json
+import org.json.JSONArray
 import java.io.Serializable
 
 @Entity
 data class RecipeItem(
     @PrimaryKey @Json(name = "uri") override var uri: String? = null, // skal label være PK?
     @ColumnInfo(name = "label") override var label: String? = null, //mulig val må endres til var, null er vel bare default?
-    //@ColumnInfo(name = "image") override val image: String? = null,
+    @ColumnInfo(name = "image") override var image: Bitmap? = null,
     @ColumnInfo(name = "source") override var source: String? = null,
     @ColumnInfo(name = "url") override var url: String? = null,
     @ColumnInfo(name = "yield") override var yield: Int? = null,
@@ -25,6 +27,21 @@ data class RecipeItem(
     override fun toString(): String {
         return "$label"
     }
+
+    fun cleanUpString(input: String) : String {
+        input.replace("[", "", false)
+        input.replace("]", "", false)
+        input.replace("\\/", ", ", false)
+        return input
+    }
+
+    /*fun mealTypeToString(input: JSONArray) : String {
+        var string = ""
+        for (line in input!!) {
+            string += "$line#"
+        }
+        return string
+    }*/
 
     /*fun ingredientLinesToString() : String {
         var string = ""

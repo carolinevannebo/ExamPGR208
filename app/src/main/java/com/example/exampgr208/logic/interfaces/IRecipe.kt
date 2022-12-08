@@ -1,9 +1,11 @@
 package com.example.exampgr208.logic.interfaces
 
+import android.graphics.Bitmap
+
 interface IRecipe {
     val uri: String?
     val label: String?
-    //val image: String?
+    val image: Bitmap?
     val source: String?
     val url: String?
     val yield: Int?

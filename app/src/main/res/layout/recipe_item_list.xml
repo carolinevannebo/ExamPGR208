@@ -20,8 +20,7 @@
 
             <ImageView
                 android:layout_margin="10dp"
-                android:src="@drawable/logo_light"
-                android:id="@+id/imageview"
+                android:id="@+id/viewImage"
                 android:layout_width="120dp"
                 android:layout_height="150dp"
                 android:contentDescription="TODO" />

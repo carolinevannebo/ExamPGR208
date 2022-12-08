@@ -4,7 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.drawToBitmap
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
@@ -23,8 +25,10 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recipe : RecipeItem = recipeList!![position]
+        holder.viewImage.setImageBitmap(recipe.image)
         holder.viewLabel.text = recipe.label
         holder.viewMealType.text = recipe.mealType
+        //holder.viewMealType.text = recipe.cleanUpString(recipe.mealType!!)
     }
 
     override fun getItemCount(): Int {
@@ -32,9 +36,11 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val viewImage: ImageView
         val viewLabel: TextView
         val viewMealType: TextView
         init {
+            viewImage = itemView.findViewById(R.id.viewImage)
             viewLabel = itemView.findViewById(R.id.viewLabel)
             viewMealType = itemView.findViewById(R.id.viewMealType)
 
