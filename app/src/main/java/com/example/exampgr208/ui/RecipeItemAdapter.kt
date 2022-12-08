@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
 import com.example.exampgr208.data.RecipeList
+import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 
-class RecipeItemAdapter(private val context: Context, recipeList: ArrayList<RecipeItem>) : // var private val context: CoroutineContext
+class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayList<RecipeItem>) : // var private val context: Context
     RecyclerView.Adapter<RecipeItemAdapter.ViewHolder>() {
     private var recipeList = RecipeList().recipeList
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
