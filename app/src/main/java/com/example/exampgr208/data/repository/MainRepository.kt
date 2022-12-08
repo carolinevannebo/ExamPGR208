@@ -44,7 +44,6 @@ class MainRepository {
                 //hitsItem.healthLabels = (recipe).getJSONArray("healthLabels")
                 //hitsItem.cautions = (recipe).getJSONArray("cautions")
                 //hitsItem.ingredientLines = (recipe).getJSONArray("ingredientLines")
-                //hitsItem.mealType = recipe.getString("mealType")
 
                 val mealTypeArray = recipe.getJSONArray("mealType")
                 for (i in 0 until mealTypeArray.length()) {

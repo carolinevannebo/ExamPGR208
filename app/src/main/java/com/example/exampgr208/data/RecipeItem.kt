@@ -28,21 +28,6 @@ data class RecipeItem(
         return "$label"
     }
 
-    fun cleanUpString(input: String) : String {
-        input.replace("[", "", false)
-        input.replace("]", "", false)
-        input.replace("\\/", ", ", false)
-        return input
-    }
-
-    /*fun mealTypeToString(input: JSONArray) : String {
-        var string = ""
-        for (line in input!!) {
-            string += "$line#"
-        }
-        return string
-    }*/
-
     /*fun ingredientLinesToString() : String {
         var string = ""
         if (ingredientLines != null) {
