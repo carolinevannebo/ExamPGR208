@@ -9,7 +9,7 @@ interface IRecipe {
     val source: String?
     val url: String?
     val yield: Int?
-    //val dietLabels: MutableList<String>?
+    val dietLabels: String?
     //val healthLabels: MutableList<String>?
     //val cautions: MutableList<String>?
     //val ingredientLines: MutableList<String>?

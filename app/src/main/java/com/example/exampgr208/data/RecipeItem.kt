@@ -17,7 +17,7 @@ data class RecipeItem(
     @ColumnInfo(name = "source") override var source: String? = null,
     @ColumnInfo(name = "url") override var url: String? = null,
     @ColumnInfo(name = "yield") override var yield: Int? = null,
-    //@ColumnInfo(name = "dietLabels") override var dietLabels: MutableList<String>? = null,
+    @ColumnInfo(name = "dietLabels") override var dietLabels: String? = null,
     //@ColumnInfo(name = "healthLabels") override var healthLabels: MutableList<String>? = null,
     //@ColumnInfo(name = "cautions") override var cautions: MutableList<String>? = null,
     //@ColumnInfo(name = "ingredientLines") override var ingredientLines: MutableList<String>? = null,

@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
             val recipesRecyclerView = findViewById<RecyclerView>(R.id.recyclerview_main)
 
+            //val recipeList bør gjøres om til RecipeList klassen
             val recipeList: ArrayList<RecipeItem> = MainRepository().downloadAssetList()
             val recipeItemAdapter = RecipeItemAdapter(this, recipeList)
             val linearLayoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)

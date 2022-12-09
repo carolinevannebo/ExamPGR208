@@ -40,7 +40,13 @@ class MainRepository {
                 hitsItem.source = recipe.getString("source")
                 hitsItem.url = recipe.getString("url")
                 hitsItem.yield = recipe.getInt("yield")
-                //hitsItem.dietLabels = (recipe).getJSONArray("dietLabels")
+                val dietLabelsArray = recipe.getJSONArray("dietLabels")
+                for (i in 0 until dietLabelsArray.length()) {
+                    hitsItem.dietLabels = dietLabelsArray.getString(i)
+                    //var string = ""
+                    //string += dietLabelsArray.getString(i)
+                    //hitsItem.dietLabels = string
+                }
                 //hitsItem.healthLabels = (recipe).getJSONArray("healthLabels")
                 //hitsItem.cautions = (recipe).getJSONArray("cautions")
                 //hitsItem.ingredientLines = (recipe).getJSONArray("ingredientLines")

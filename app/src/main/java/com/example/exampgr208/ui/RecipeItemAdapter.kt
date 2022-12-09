@@ -26,12 +26,17 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
         val recipe : RecipeItem = recipeList!![position]
 
         val yieldString = "Yield: " + recipe.yield.toString()
+        var dietString = "Diet: Not specified"
+        if (recipe.dietLabels != null) {
+            dietString = "Diet: " + recipe.dietLabels.toString()
+        }
         val mealTypeString = "Meal Type: " + recipe.mealType
         val caloriesString = "Calories: " + recipe.calories.toString()
 
         holder.viewImage.setImageBitmap(recipe.image)
         holder.viewLabel.text = recipe.label
         holder.viewYield.text = yieldString
+        holder.viewDiet.text = dietString
         holder.viewMealType.text = mealTypeString
         holder.viewCalories.text = caloriesString
     }
@@ -44,12 +49,14 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
         val viewImage: ImageView
         val viewLabel: TextView
         val viewYield: TextView
+        val viewDiet: TextView
         val viewMealType: TextView
         val viewCalories: TextView
         init {
             viewImage = itemView.findViewById(R.id.viewImage)
             viewLabel = itemView.findViewById(R.id.viewLabel)
             viewYield = itemView.findViewById(R.id.viewYield)
+            viewDiet = itemView.findViewById(R.id.viewDiet)
             viewMealType = itemView.findViewById(R.id.viewMealType)
             viewCalories = itemView.findViewById(R.id.viewCalories)
         }
