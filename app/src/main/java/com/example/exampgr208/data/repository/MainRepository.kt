@@ -20,8 +20,8 @@ class MainRepository {
             val assetData = URL("https://api.edamam.com/api/recipes/v2?app_key=2ecd749eade96f92c4303affe954eb31&app_id=8efed005&type=public&q=all").readText()//.toString()
 
             val assetHitsArray = (JSONObject(assetData).get("hits") as JSONArray)
-            println("test" + assetHitsArray.length())
-            Log.i("test", assetHitsArray.toString())
+            //println("test" + assetHitsArray.length())
+            //Log.i("test", assetHitsArray.toString())
             (0 until assetHitsArray.length()).forEach{ item ->
                 val hitsItem = RecipeItem()
                 val assetItem = assetHitsArray.get(item)
@@ -40,21 +40,24 @@ class MainRepository {
                 hitsItem.source = recipe.getString("source")
                 hitsItem.url = recipe.getString("url")
                 hitsItem.yield = recipe.getInt("yield")
+
                 val dietLabelsArray = recipe.getJSONArray("dietLabels")
-                for (i in 0 until dietLabelsArray.length()) {
-                    hitsItem.dietLabels = dietLabelsArray.getString(i)
-                    //var string = ""
-                    //string += dietLabelsArray.getString(i)
-                    //hitsItem.dietLabels = string
-                }
-                //hitsItem.healthLabels = (recipe).getJSONArray("healthLabels")
-                //hitsItem.cautions = (recipe).getJSONArray("cautions")
-                //hitsItem.ingredientLines = (recipe).getJSONArray("ingredientLines")
+                setDietLabels(hitsItem, dietLabelsArray)
+
+                val healthLabelsArray = recipe.getJSONArray("healthLabels")
+                setHealthLabels(hitsItem, healthLabelsArray)
+                //Log.i("test healthlabels", hitsItem.healthLabels.toString())
+
+                val cautionsArray = (recipe).getJSONArray("cautions")
+                setCautions(hitsItem, cautionsArray)
+                //Log.i("test cautions", hitsItem.cautions.toString())
+
+                val ingredientLinesArray = (recipe).getJSONArray("ingredientLines")
+                setIngredientLines(hitsItem, ingredientLinesArray)
+                //Log.i("test ingredientLines", hitsItem.ingredientLines.toString())
 
                 val mealTypeArray = recipe.getJSONArray("mealType")
-                for (i in 0 until mealTypeArray.length()) {
-                    hitsItem.mealType = mealTypeArray.getString(i)
-                }
+                setMealType(hitsItem, mealTypeArray)
 
                 hitsItem.calories = recipe.getInt("calories")
 
@@ -62,5 +65,35 @@ class MainRepository {
             }
         }.await()
         return allHits
+    }
+
+    private fun setDietLabels(hitsItem: RecipeItem, inputArray: JSONArray) {
+        for (i in 0 until inputArray.length()) {
+            hitsItem.dietLabels = inputArray.getString(i)
+        }
+    }
+
+    private fun setHealthLabels(hitsItem: RecipeItem, inputArray: JSONArray){
+        for (i in 0 until inputArray.length()) {
+            hitsItem.healthLabels = inputArray.getString(i)
+        }
+    }
+
+    private fun setCautions(hitsItem: RecipeItem, inputArray: JSONArray){
+        for (i in 0 until inputArray.length()) {
+            hitsItem.cautions = inputArray.getString(i)
+        }
+    }
+
+    private fun setIngredientLines(hitsItem: RecipeItem, inputArray: JSONArray){
+        for (i in 0 until inputArray.length()) {
+            hitsItem.ingredientLines = inputArray.getString(i)
+        }
+    }
+
+    private fun setMealType(hitsItem: RecipeItem, inputArray: JSONArray) {
+        for (i in 0 until inputArray.length()) {
+            hitsItem.mealType = inputArray.getString(i)
+        }
     }
 }

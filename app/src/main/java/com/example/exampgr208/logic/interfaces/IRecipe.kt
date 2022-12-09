@@ -10,9 +10,9 @@ interface IRecipe {
     val url: String?
     val yield: Int?
     val dietLabels: String?
-    //val healthLabels: MutableList<String>?
-    //val cautions: MutableList<String>?
-    //val ingredientLines: MutableList<String>?
+    val healthLabels: String?
+    val cautions: String?
+    val ingredientLines: String?
     val mealType: String?
     val calories: Int?
 }

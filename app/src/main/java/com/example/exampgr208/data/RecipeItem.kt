@@ -18,9 +18,9 @@ data class RecipeItem(
     @ColumnInfo(name = "url") override var url: String? = null,
     @ColumnInfo(name = "yield") override var yield: Int? = null,
     @ColumnInfo(name = "dietLabels") override var dietLabels: String? = null,
-    //@ColumnInfo(name = "healthLabels") override var healthLabels: MutableList<String>? = null,
-    //@ColumnInfo(name = "cautions") override var cautions: MutableList<String>? = null,
-    //@ColumnInfo(name = "ingredientLines") override var ingredientLines: MutableList<String>? = null,
+    @ColumnInfo(name = "healthLabels") override var healthLabels: String? = null,
+    @ColumnInfo(name = "cautions") override var cautions: String? = null,
+    @ColumnInfo(name = "ingredientLines") override var ingredientLines: String? = null,
     @ColumnInfo(name = "mealType") override var mealType: String? = null,
     @ColumnInfo(name = "calories") override var calories: Int? = null
 ) : IRecipe, Serializable { //du har lagt til override på alle val for at den skal kunne arve fra interface
