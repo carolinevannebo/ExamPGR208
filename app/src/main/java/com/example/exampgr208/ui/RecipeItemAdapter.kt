@@ -1,6 +1,5 @@
 package com.example.exampgr208.ui
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
 import com.example.exampgr208.data.RecipeList
 import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayList<RecipeItem>) : // var private val context: Context
     RecyclerView.Adapter<RecipeItemAdapter.ViewHolder>() {
@@ -43,6 +41,10 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
 
     override fun getItemCount(): Int {
         return recipeList!!.size
+    }
+
+    fun getRecipeList() : ArrayList<RecipeItem> {
+        return recipeList as ArrayList<RecipeItem>
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

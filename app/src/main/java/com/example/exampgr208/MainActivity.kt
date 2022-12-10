@@ -1,18 +1,19 @@
 package com.example.exampgr208
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exampgr208.data.RecipeItem
 import com.example.exampgr208.data.repository.MainRepository
+import com.example.exampgr208.logic.SearchEngine
 import com.example.exampgr208.ui.RecipeItemAdapter
 import kotlinx.coroutines.*
-import java.net.URL
-import kotlin.coroutines.CoroutineContext
 
 class MainActivity : AppCompatActivity() {
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,9 +22,15 @@ class MainActivity : AppCompatActivity() {
 
             val recipesRecyclerView = findViewById<RecyclerView>(R.id.recyclerview_main)
 
-            //val recipeList bør gjøres om til RecipeList klassen
-            val recipeList: ArrayList<RecipeItem> = MainRepository().downloadAssetList()
+            val apiEndpointQuery = "all"
+            val recipeList: ArrayList<RecipeItem> = MainRepository().downloadAssetList(apiEndpointQuery)
             val recipeItemAdapter = RecipeItemAdapter(this, recipeList)
+
+        // tester søkefelt
+            SearchEngine(recipeList).onLoad(
+                recipeItemAdapter, findViewById<View>(R.id.search_bar) as EditText
+            )
+        //
             val linearLayoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
 
             recipesRecyclerView.layoutManager = linearLayoutManager
@@ -31,5 +38,4 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-
 }

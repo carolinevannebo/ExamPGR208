@@ -23,6 +23,7 @@
                 android:id="@+id/viewImage"
                 android:layout_width="120dp"
                 android:layout_height="150dp"
+                android:gravity="center"
                 android:contentDescription="TODO" />
 
             <LinearLayout
