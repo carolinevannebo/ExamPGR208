@@ -24,12 +24,12 @@ class MainActivity : AppCompatActivity() {
 
             val apiEndpointQuery = "all"
             val recipeList: ArrayList<RecipeItem> = MainRepository().downloadAssetList(apiEndpointQuery)
-            val recipeItemAdapter = RecipeItemAdapter(this, recipeList)
+            var recipeItemAdapter = RecipeItemAdapter(this, recipeList)
 
         // tester søkefelt
-            SearchEngine(recipeList).onLoad(
-                recipeItemAdapter, findViewById<View>(R.id.search_bar) as EditText
-            )
+            SearchEngine(recipeList).onLoad(recipeItemAdapter, findViewById<View>(R.id.search_bar) as EditText)
+            //recipeItemAdapter = RecipeItemAdapter(this, SearchEngine(recipeList).onLoad(
+            //    recipeItemAdapter, findViewById<View>(R.id.search_bar) as EditText))
         //
             val linearLayoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
 

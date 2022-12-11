@@ -12,7 +12,7 @@ import kotlinx.coroutines.*
 class SearchEngine(var inputList: ArrayList<RecipeItem>) {
 
     @OptIn(DelicateCoroutinesApi::class)
-    fun onLoad(inputAdapter: RecipeItemAdapter, inputView: EditText){
+    fun onLoad(inputAdapter: RecipeItemAdapter, inputView: EditText) : ArrayList<RecipeItem>{
 
         var apiEndpointQuery: String
 
@@ -44,7 +44,7 @@ class SearchEngine(var inputList: ArrayList<RecipeItem>) {
             }
             inputView.addTextChangedListener(textWatcher)
         }
-
+        return inputList //tester om den kan returnere
     }
 
 }
