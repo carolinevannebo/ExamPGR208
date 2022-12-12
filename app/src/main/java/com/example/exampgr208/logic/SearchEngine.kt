@@ -3,7 +3,9 @@ package com.example.exampgr208.logic
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.widget.EditText
+import androidx.recyclerview.widget.AdapterListUpdateCallback
 import com.example.exampgr208.data.RecipeItem
 import com.example.exampgr208.data.repository.MainRepository
 import com.example.exampgr208.ui.RecipeItemAdapter
@@ -12,7 +14,7 @@ import kotlinx.coroutines.*
 class SearchEngine(var inputList: ArrayList<RecipeItem>) {
 
     @OptIn(DelicateCoroutinesApi::class)
-    fun onLoad(inputAdapter: RecipeItemAdapter, inputView: EditText) : ArrayList<RecipeItem>{
+    fun onLoad(inputAdapter: RecipeItemAdapter, inputView: EditText) /*: ArrayList<RecipeItem>*/{
 
         var apiEndpointQuery: String
 
@@ -29,10 +31,13 @@ class SearchEngine(var inputList: ArrayList<RecipeItem>) {
                     }
                     Log.i("Check query", apiEndpointQuery)
                     GlobalScope.launch {
-                        inputList = inputAdapter.getRecipeList()
                         inputList = MainRepository().downloadAssetList(apiEndpointQuery)
+                        inputAdapter.recipeList = inputList
+                        AdapterListUpdateCallback(inputAdapter)
+                        //RecipeItemAdapter(this, inputList) //please
                         ////////// alert adapter that dataset has changed...?
                         Log.i("checkNewList", inputList.toString())
+                        Log.i("check list in adapter", inputAdapter.recipeList.toString())
                     }
                 }
                 @Override
@@ -44,7 +49,7 @@ class SearchEngine(var inputList: ArrayList<RecipeItem>) {
             }
             inputView.addTextChangedListener(textWatcher)
         }
-        return inputList //tester om den kan returnere
+        //return inputList //tester om den kan returnere
     }
 
 }

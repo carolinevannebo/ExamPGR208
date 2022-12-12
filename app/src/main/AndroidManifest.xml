@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ExamPGR208"
-        tools:targetApi="33">
+        tools:targetApi="33"
+        android:enableOnBackInvokedCallback="true">
 
         <provider
             android:name="androidx.startup.InitializationProvider"

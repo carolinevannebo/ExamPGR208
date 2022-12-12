@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
             val apiEndpointQuery = "all"
             val recipeList: ArrayList<RecipeItem> = MainRepository().downloadAssetList(apiEndpointQuery)
-            var recipeItemAdapter = RecipeItemAdapter(this, recipeList)
+            val recipeItemAdapter = RecipeItemAdapter(this, recipeList)
 
         // tester søkefelt
             SearchEngine(recipeList).onLoad(recipeItemAdapter, findViewById<View>(R.id.search_bar) as EditText)

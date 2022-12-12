@@ -13,7 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 
 class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayList<RecipeItem>) : // var private val context: Context
     RecyclerView.Adapter<RecipeItemAdapter.ViewHolder>() {
-    private var recipeList = RecipeList().recipeList
+    var recipeList = RecipeList().recipeList
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.recipe_item_list, parent, false)
