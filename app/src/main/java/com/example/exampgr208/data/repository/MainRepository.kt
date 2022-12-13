@@ -17,8 +17,7 @@ class MainRepository {
         val allHits = ArrayList<RecipeItem>()
 
         GlobalScope.async {
-            //val assetData = URL("https://api.edamam.com/api/recipes/v2?app_key=2ecd749eade96f92c4303affe954eb31&app_id=8efed005&type=public&q=all").readText()//.toString()
-            val assetData = URL("https://api.edamam.com/api/recipes/v2?app_key=2ecd749eade96f92c4303affe954eb31&app_id=8efed005&type=public&q=${apiEndpointQuery}").readText()
+            val assetData = URL("https://api.edamam.com/api/recipes/v2?app_key=2ecd749eade96f92c4303affe954eb31&app_id=8efed005&type=public&q=$apiEndpointQuery").readText()
 
             val assetHitsArray = (JSONObject(assetData).get("hits") as JSONArray)
             //println("test" + assetHitsArray.length())

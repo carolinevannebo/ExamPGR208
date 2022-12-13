@@ -14,14 +14,17 @@
         android:contentDescription="@string/app_name"
         android:src="@drawable/logo_light" />
 
-    <EditText
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/logo_light"
-        android:hint="@string/search_placeholder"
         android:inputType="text"
-        android:paddingHorizontal="10dp"
+        app:queryHint="@string/search_placeholder"
+        app:defaultQueryHint="@string/search_placeholder"
+        android:background="@drawable/textlines"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textColorHint="#8D6E63"
         android:textSize="20sp" />
 

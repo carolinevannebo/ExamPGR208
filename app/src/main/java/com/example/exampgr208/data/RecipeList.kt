@@ -9,7 +9,7 @@ import com.example.exampgr208.data.RecipeItem
 data class RecipeList(
     //@PrimaryKey val uri: String? = null,
     @PrimaryKey(autoGenerate = true) val listId: Int? = null,
-    @ColumnInfo val recipeList: MutableList<RecipeItem>? = null
+    @ColumnInfo val recipeList: ArrayList<RecipeItem>? = null
 ) {
     fun recipeListResponse(): List<RecipeItem> {
         return recipeList!!.map { it }
