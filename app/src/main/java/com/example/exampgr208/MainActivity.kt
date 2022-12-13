@@ -72,9 +72,7 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
         })
-
-        //getUserData()
-        //searchEngine()
+        
         /*GlobalScope.launch(Dispatchers.Main){
 
             val recipesRecyclerView = findViewById<RecyclerView>(R.id.recyclerview_main)
@@ -88,42 +86,6 @@ class MainActivity : AppCompatActivity() {
         }*/
     }
 
-    /*@OptIn(DelicateCoroutinesApi::class)
-    private fun searchEngine(): Boolean {
-        val searchView = findViewById<SearchView>(R.id.search_bar)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                TODO("Not yet implemented")
-            }
-            override fun onQueryTextChange(newText: String?): Boolean {
-                tempArrayList.clear()
-                apiEndpointQuery = newText!!.lowercase()
-                if (apiEndpointQuery.isNotEmpty()) {
-                    GlobalScope.launch { tempArrayList = MainRepository().downloadAssetList(apiEndpointQuery) }
-                    recyclerView.adapter!!.notifyDataSetChanged()
-                }
-                else {
-                    tempArrayList.clear()
-                    tempArrayList.addAll(newArrayList)
-                    recyclerView.adapter!!.notifyDataSetChanged()
-                }
-                return false
-            }
-        })
-        return searchEngine()
-    }*/
-
-    //@OptIn(DelicateCoroutinesApi::class)
-   /* private fun getUserData() {
-        initialArrayList.forEach {
-            newArrayList.add(it)
-        }
-        tempArrayList.addAll(newArrayList)
-        /*GlobalScope.launch {
-            val adapter = RecipeItemAdapter(this, tempArrayList)
-            recyclerView.adapter = adapter
-        }*/
-    }*/
 }
 
 //      --- Spagetti som var i onCreate ---

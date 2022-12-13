@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.KeyEvent
 import android.widget.EditText
 import androidx.recyclerview.widget.AdapterListUpdateCallback
+import androidx.recyclerview.widget.RecyclerView
+import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
 import com.example.exampgr208.data.RecipeList
 import com.example.exampgr208.data.repository.MainRepository
