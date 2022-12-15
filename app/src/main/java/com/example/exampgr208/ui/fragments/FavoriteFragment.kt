@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.exampgr208.R
 
-class FavoriteFragment : Fragment(R.layout.favorite_fragment) {
+class FavoriteFragment : Fragment() { //(R.layout.favorite_fragment)
 
     override fun onCreateView(
         inflater: LayoutInflater,

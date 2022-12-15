@@ -12,8 +12,7 @@
 
     <item android:title="Recipes"
         android:id="@+id/nav_home"
-        android:icon="@drawable/book"
-        android:enabled="true"/>
+        android:icon="@drawable/book" />
 
     <item android:title="Settings"
         android:id="@+id/nav_settings"

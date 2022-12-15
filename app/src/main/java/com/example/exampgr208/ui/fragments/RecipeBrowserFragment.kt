@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +14,7 @@ import com.example.exampgr208.data.repository.MainRepository
 import com.example.exampgr208.ui.RecipeItemAdapter
 import kotlinx.coroutines.*
 
-class RecipeBrowserFragment : Fragment(R.layout.recipe_browser_fragment) {
+class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
     private lateinit var recyclerView: RecyclerView
     lateinit var newArrayList : ArrayList<RecipeItem>
     lateinit var tempArrayList : ArrayList<RecipeItem>

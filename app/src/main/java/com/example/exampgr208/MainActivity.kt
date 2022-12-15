@@ -32,25 +32,24 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)      //(R.layout.activity_main) //(binding.root)
+        //replaceFragment(RecipeBrowserFragment())
         fragmentManager.beginTransaction()
             .replace(
                 R.id.frame_layout,
                 RecipeBrowserFragment()
             ).commit()
 
+        binding.navBar.selectedItemId = R.id.nav_home
         binding.navBar.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.nav_fav -> replaceFragment(FavoriteFragment())
                 R.id.nav_search_history -> replaceFragment(SearchHistoryFragment())
                 R.id.nav_home -> replaceFragment(RecipeBrowserFragment())
                 R.id.nav_settings -> replaceFragment(SettingsFragment())
-
-                else -> {}
             }
             true
         }
-
-        binding.navBar[R.id.nav_home].isSelected = true
+        //binding.navBar[R.id.nav_home].isSelected = true
 
         /*val favoriteBtn: ImageButton = findViewById(R.id.nav_fav)
         favoriteBtn.setOnClickListener {
@@ -104,6 +103,7 @@ class MainActivity : AppCompatActivity() {
         fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction()
             .addToBackStack(null)
+            .setReorderingAllowed(true)
             .replace(R.id.frame_layout, fragment)
             .commit()
     }

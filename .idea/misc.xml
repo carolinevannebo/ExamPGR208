@@ -16,7 +16,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/favorite_fragment.xml" value="0.2128623188405797" />
         <entry key="app/src/main/res/layout/no_search_result.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/recipe_browser_fragment.xml" value="0.2128623188405797" />
+        <entry key="app/src/main/res/layout/recipe_browser_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/recipe_fragment.xml" value="0.2128623188405797" />
         <entry key="app/src/main/res/layout/recipe_item_list.xml" value="0.375" />
         <entry key="app/src/main/res/layout/search_fragment.xml" value="0.2128623188405797" />

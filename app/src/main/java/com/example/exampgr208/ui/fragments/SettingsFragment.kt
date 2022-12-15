@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.exampgr208.R
 
-class SettingsFragment : Fragment(R.layout.settings_fragment) {
+class SettingsFragment : Fragment() { //(R.layout.settings_fragment)
 
     override fun onCreateView(
         inflater: LayoutInflater,
