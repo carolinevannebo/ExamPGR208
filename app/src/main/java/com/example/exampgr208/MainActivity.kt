@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         fragmentManager = supportFragmentManager
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)      //(R.layout.activity_main) //(binding.root)
+        setContentView(binding.root)      //(R.layout.activity_main) //(binding.root)
         //replaceFragment(RecipeBrowserFragment())
         fragmentManager.beginTransaction()
             .replace(
