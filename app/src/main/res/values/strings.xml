@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">ExamPGR208</string>
     <string name="search_placeholder">Search recipe...</string>
+    <string name="no_result_error_msg">The cook could not find a recipe matching your search</string>
 </resources>

@@ -9,7 +9,7 @@ import com.squareup.moshi.Json
 import org.json.JSONArray
 import java.io.Serializable
 
-@Entity
+@Entity(tableName = "Recipe")
 data class RecipeItem(
     @PrimaryKey @Json(name = "uri") override var uri: String? = null, // skal label være PK?
     @ColumnInfo(name = "label") override var label: String? = null, //mulig val må endres til var, null er vel bare default?

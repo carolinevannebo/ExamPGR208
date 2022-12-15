@@ -1,5 +1,6 @@
 package com.example.exampgr208
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
@@ -8,21 +9,30 @@ import android.view.View
 import android.widget.EditText
 import android.widget.SearchView
 import android.app.SearchManager
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.SearchView.OnQueryTextListener
+import androidx.core.view.get
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exampgr208.data.RecipeItem
+import com.example.exampgr208.data.database.AppDatabase
+import com.example.exampgr208.data.database.RecipeItemDao
 import com.example.exampgr208.data.repository.MainRepository
 import com.example.exampgr208.logic.SearchEngine
 import com.example.exampgr208.ui.RecipeItemAdapter
 import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
+    //private lateinit var recyclerViewError: RecyclerView
     lateinit var newArrayList : ArrayList<RecipeItem>
     lateinit var tempArrayList : ArrayList<RecipeItem>
-    lateinit var initialArrayList : ArrayList<RecipeItem>
+    private lateinit var initialArrayList : ArrayList<RecipeItem>
     private var apiEndpointQuery = "all"
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -44,35 +54,14 @@ class MainActivity : AppCompatActivity() {
                 newArrayList.add(it)
             }
             tempArrayList.addAll(newArrayList)
-
             withContext(Dispatchers.Main){
                 recyclerView.adapter = RecipeItemAdapter(this, tempArrayList)
+                /*if (recyclerView.visibility == RecyclerView.GONE) {
+                    recyclerView.visibility = RecyclerView.VISIBLE
+                }*/
+                //val layoutInflater = LayoutInflater.from(this@MainActivity).inflate(R.layout.rec)
             }
         }
-
-        val searchView = findViewById<androidx.appcompat.widget.SearchView>(R.id.search_bar)
-        searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                recyclerView.adapter!!.notifyDataSetChanged()
-                return false
-            }
-            override fun onQueryTextChange(newText: String?): Boolean {
-                tempArrayList.clear()
-                apiEndpointQuery = newText!!.lowercase()
-                if (apiEndpointQuery.isNotEmpty()) {
-                    GlobalScope.launch { newArrayList = MainRepository().downloadAssetList(apiEndpointQuery) }
-                    tempArrayList.addAll(newArrayList)
-                    //recyclerView.adapter!!.notifyDataSetChanged()
-                }
-                else {
-                    tempArrayList.clear()
-                    tempArrayList.addAll(newArrayList)
-                    //recyclerView.adapter!!.notifyDataSetChanged()
-                }
-                return false
-            }
-        })
-        
         /*GlobalScope.launch(Dispatchers.Main){
 
             val recipesRecyclerView = findViewById<RecyclerView>(R.id.recyclerview_main)
@@ -84,6 +73,45 @@ class MainActivity : AppCompatActivity() {
             recipesRecyclerView.layoutManager = linearLayoutManager
             recipesRecyclerView.adapter = recipeItemAdapter
         }*/
+        searchEngine()
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun searchEngine() {
+        val searchView = findViewById<androidx.appcompat.widget.SearchView>(R.id.search_bar)
+        /*recyclerViewError = findViewById(R.id.error_layout)
+        recyclerViewError.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)*/
+        searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                //recyclerView.adapter!!.notifyDataSetChanged()
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                tempArrayList.clear()
+                apiEndpointQuery = newText!!.lowercase()
+                if (apiEndpointQuery.isNotEmpty()) {
+                    GlobalScope.launch { newArrayList = MainRepository().downloadAssetList(apiEndpointQuery) }
+                    tempArrayList.addAll(newArrayList)
+                    recyclerView.adapter!!.notifyDataSetChanged()
+                    /*if (!newArrayList.isNullOrEmpty()) {
+                        /*recyclerViewError.visibility = RecyclerView.GONE
+                        recyclerView.visibility = RecyclerView.VISIBLE*/
+                        tempArrayList.addAll(newArrayList)
+                        recyclerView.adapter!!.notifyDataSetChanged()
+
+                    } else if (newArrayList.isNullOrEmpty()) {
+                        /*recyclerView.visibility = RecyclerView.GONE
+                        recyclerViewError.visibility = RecyclerView.VISIBLE*/
+                    }*/
+                }
+                else {
+                    tempArrayList.clear()
+                    tempArrayList.addAll(newArrayList)
+                    recyclerView.adapter!!.notifyDataSetChanged()
+                }
+                return false
+            }
+        })
     }
 
 }
