@@ -8,10 +8,10 @@ import com.example.exampgr208.data.RecipeItem
 
 @Dao
 interface RecipeItemDao {
-    @Query("SELECT * FROM RecipeItem")
-    fun getAllRecipes(): List<RecipeItem>
+    @Query("SELECT * FROM recipe")
+    fun getAll(): List<RecipeItem>
 
-    @Query("SELECT * FROM RecipeItem WHERE uri IN (:recipeItemIds)")
+    @Query("SELECT * FROM recipe WHERE uri IN (:recipeItemIds)")
     fun loadAllByIds(recipeItemIds: Array<String>): List<RecipeItem>
 
     @Insert

@@ -12,33 +12,60 @@ import android.app.SearchManager
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.SearchView.OnQueryTextListener
 import androidx.core.view.get
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exampgr208.data.RecipeItem
-import com.example.exampgr208.data.database.AppDatabase
-import com.example.exampgr208.data.database.RecipeItemDao
+//import com.example.exampgr208.data.database.AppDatabase
+//import com.example.exampgr208.data.database.RecipeItemDao
 import com.example.exampgr208.data.repository.MainRepository
+//import com.example.exampgr208.databinding.ActivityMainBinding
 import com.example.exampgr208.logic.SearchEngine
 import com.example.exampgr208.ui.RecipeItemAdapter
+import com.example.exampgr208.ui.fragments.FavoriteFragment
+import com.example.exampgr208.ui.fragments.SearchFragment
 import kotlinx.coroutines.*
+import org.json.JSONArray
 import kotlin.coroutines.CoroutineContext
 
 class MainActivity : AppCompatActivity() {
+    //lateinit var binding: ActivityMainBinding //ny
+    lateinit var fragmentManager: FragmentManager
 
-    private lateinit var recyclerView: RecyclerView
+    /*private lateinit var recyclerView: RecyclerView
     //private lateinit var recyclerViewError: RecyclerView
     lateinit var newArrayList : ArrayList<RecipeItem>
     lateinit var tempArrayList : ArrayList<RecipeItem>
     private lateinit var initialArrayList : ArrayList<RecipeItem>
-    private var apiEndpointQuery = "all"
+    private var apiEndpointQuery = "all"*/
 
-    @OptIn(DelicateCoroutinesApi::class)
+    //@OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
+        fragmentManager = supportFragmentManager
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        fragmentManager.beginTransaction()
+            .replace(
+                R.id.fragment_container_main,
+                SearchFragment()
+            ).commit()
+
+        val favoriteBtn: ImageButton = findViewById(R.id.nav_fav)
+        favoriteBtn.setOnClickListener {
+            replaceFragment(FavoriteFragment())
+        }
+
+        val homeBtn: ImageButton = findViewById(R.id.nav_home)
+        homeBtn.setOnClickListener {
+            replaceFragment(SearchFragment())
+        }
+
+        /*setContentView(R.layout.activity_main)
 
         recyclerView = findViewById(R.id.recyclerview_main)
         recyclerView.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
@@ -73,10 +100,18 @@ class MainActivity : AppCompatActivity() {
             recipesRecyclerView.layoutManager = linearLayoutManager
             recipesRecyclerView.adapter = recipeItemAdapter
         }*/
-        searchEngine()
+        searchEngine()*/
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
+    private fun replaceFragment(fragment : Fragment) {
+        fragmentManager = supportFragmentManager
+        fragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .replace(R.id.fragment_container_main, fragment)
+            .commit()
+    }
+
+    /*@OptIn(DelicateCoroutinesApi::class)
     fun searchEngine() {
         val searchView = findViewById<androidx.appcompat.widget.SearchView>(R.id.search_bar)
         /*recyclerViewError = findViewById(R.id.error_layout)
@@ -112,12 +147,12 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
         })
-    }
+    }*/
 
 }
 
 //      --- Spagetti som var i onCreate ---
-
+/*
 //test
 /*val searchBar = findViewById<EditText>(R.id.search_bar)
 searchBar.setOnClickListener{
@@ -164,3 +199,4 @@ recipeItemAdapter = RecipeItemAdapter(this, listAfterSearch)*/
 //recipesRecyclerView.AdapterDataObserver
 //recipesRecyclerView.hasPendingAdapterUpdates()
 //fun registerAdapterDataObserver(observer: RecyclerView.AdapterDataObserver): Unit {}
+*/

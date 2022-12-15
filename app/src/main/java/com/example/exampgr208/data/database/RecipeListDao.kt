@@ -7,7 +7,7 @@ import com.example.exampgr208.data.RecipeList
 @Dao
 interface RecipeListDao {
     @Query("SELECT * FROM recipeList")
-    fun getAllRecipeLists(): List<RecipeList>
+    fun getAll(): List<RecipeList>
 
     @Transaction
     @Query("SELECT * FROM recipeList")

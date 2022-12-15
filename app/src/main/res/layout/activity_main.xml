@@ -14,26 +14,13 @@
         android:contentDescription="@string/app_name"
         android:src="@drawable/logo_light" />
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_bar"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_main"
+        android:layout_below="@id/logo_light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/logo_light"
-        android:inputType="text"
-        app:queryHint="@string/search_placeholder"
-        app:defaultQueryHint="@string/search_placeholder"
-        android:background="@drawable/textlines"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:textColorHint="#8D6E63"
-        android:textSize="20sp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="10dp"
-        android:layout_below="@+id/search_bar"/>
+        android:layout_marginRight="10dp"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_bar"

@@ -3,7 +3,7 @@ package com.example.exampgr208.data.database
 import android.content.Context
 import androidx.room.Room
 import kotlinx.coroutines.CoroutineScope
-
+/*
 object DatabaseBuilder {
 
     private var INSTANCE: AppDatabase? = null
@@ -20,6 +20,6 @@ object DatabaseBuilder {
         Room.databaseBuilder(
             context.applicationContext,
             AppDatabase::class.java,
-            "RecipeHelperDB.db"
+            "RecipeHelperDB"
         ).build()
-}
+}*/
