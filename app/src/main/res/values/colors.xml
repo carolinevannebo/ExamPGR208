@@ -10,4 +10,5 @@
     <color name="logo_light_bg">#E4D2C4</color>
     <color name="nav_bar_dark_bg">#ac948b</color>
     <color name="action_bar_bg">#221D18</color>
+    <color name="neutral">#bda9a2</color>
 </resources>

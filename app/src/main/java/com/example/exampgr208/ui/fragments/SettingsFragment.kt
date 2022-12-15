@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.exampgr208.R
 
-class FavoriteFragment : Fragment(R.layout.favorite_fragment) {
+class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.favorite_fragment, container, false)
+        return inflater.inflate(R.layout.settings_fragment, container, false)
     }
-
 }

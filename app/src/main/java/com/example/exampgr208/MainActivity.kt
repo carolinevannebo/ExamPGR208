@@ -1,41 +1,23 @@
 package com.example.exampgr208
 
-import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings
-import android.util.Log
-import android.view.View
-import android.widget.EditText
-import android.widget.SearchView
-import android.app.SearchManager
-import android.content.Context
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.SearchView.OnQueryTextListener
 import androidx.core.view.get
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.exampgr208.data.RecipeItem
 //import com.example.exampgr208.data.database.AppDatabase
 //import com.example.exampgr208.data.database.RecipeItemDao
-import com.example.exampgr208.data.repository.MainRepository
-//import com.example.exampgr208.databinding.ActivityMainBinding
-import com.example.exampgr208.logic.SearchEngine
-import com.example.exampgr208.ui.RecipeItemAdapter
+import com.example.exampgr208.databinding.ActivityMainBinding
 import com.example.exampgr208.ui.fragments.FavoriteFragment
-import com.example.exampgr208.ui.fragments.SearchFragment
-import kotlinx.coroutines.*
-import org.json.JSONArray
-import kotlin.coroutines.CoroutineContext
+import com.example.exampgr208.ui.fragments.RecipeBrowserFragment
+import com.example.exampgr208.ui.fragments.SearchHistoryFragment
+import com.example.exampgr208.ui.fragments.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
-    //lateinit var binding: ActivityMainBinding //ny
-    lateinit var fragmentManager: FragmentManager
+
+    private lateinit var fragmentManager: FragmentManager
+    private lateinit var binding: ActivityMainBinding
 
     /*private lateinit var recyclerView: RecyclerView
     //private lateinit var recyclerViewError: RecyclerView
@@ -47,23 +29,38 @@ class MainActivity : AppCompatActivity() {
     //@OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         fragmentManager = supportFragmentManager
+        binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)      //(R.layout.activity_main) //(binding.root)
         fragmentManager.beginTransaction()
             .replace(
-                R.id.fragment_container_main,
-                SearchFragment()
+                R.id.frame_layout,
+                RecipeBrowserFragment()
             ).commit()
 
-        val favoriteBtn: ImageButton = findViewById(R.id.nav_fav)
+        binding.navBar.setOnItemSelectedListener {
+            when(it.itemId) {
+                R.id.nav_fav -> replaceFragment(FavoriteFragment())
+                R.id.nav_search_history -> replaceFragment(SearchHistoryFragment())
+                R.id.nav_home -> replaceFragment(RecipeBrowserFragment())
+                R.id.nav_settings -> replaceFragment(SettingsFragment())
+
+                else -> {}
+            }
+            true
+        }
+
+        binding.navBar[R.id.nav_home].isSelected = true
+
+        /*val favoriteBtn: ImageButton = findViewById(R.id.nav_fav)
         favoriteBtn.setOnClickListener {
             replaceFragment(FavoriteFragment())
         }
 
         val homeBtn: ImageButton = findViewById(R.id.nav_home)
         homeBtn.setOnClickListener {
-            replaceFragment(SearchFragment())
-        }
+            replaceFragment(RecipeBrowserFragment())
+        }*/
 
         /*setContentView(R.layout.activity_main)
 
@@ -107,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction()
             .addToBackStack(null)
-            .replace(R.id.fragment_container_main, fragment)
+            .replace(R.id.frame_layout, fragment)
             .commit()
     }
 
