@@ -32,12 +32,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)      //(R.layout.activity_main) //(binding.root)
-        //replaceFragment(RecipeBrowserFragment())
-        fragmentManager.beginTransaction()
-            .replace(
-                R.id.frame_layout,
-                RecipeBrowserFragment()
-            ).commit()
+        replaceFragment(RecipeBrowserFragment())
 
         binding.navBar.selectedItemId = R.id.nav_home
         binding.navBar.setOnItemSelectedListener {
@@ -49,17 +44,6 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        //binding.navBar[R.id.nav_home].isSelected = true
-
-        /*val favoriteBtn: ImageButton = findViewById(R.id.nav_fav)
-        favoriteBtn.setOnClickListener {
-            replaceFragment(FavoriteFragment())
-        }
-
-        val homeBtn: ImageButton = findViewById(R.id.nav_home)
-        homeBtn.setOnClickListener {
-            replaceFragment(RecipeBrowserFragment())
-        }*/
 
         /*setContentView(R.layout.activity_main)
 
