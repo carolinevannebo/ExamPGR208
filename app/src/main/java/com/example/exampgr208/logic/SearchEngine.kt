@@ -15,7 +15,7 @@ import com.example.exampgr208.ui.RecipeItemAdapter
 import kotlinx.coroutines.*
 
 class SearchEngine(var inputList: ArrayList<RecipeItem>) {
-
+/*
     @OptIn(DelicateCoroutinesApi::class)
     fun onLoad(/*inputAdapter: RecipeItemAdapter,*/ inputView: EditText) : ArrayList<RecipeItem>{
 
@@ -68,5 +68,5 @@ class SearchEngine(var inputList: ArrayList<RecipeItem>) {
         }
         return inputList //tester om den kan returnere
     }
-
+*/
 }

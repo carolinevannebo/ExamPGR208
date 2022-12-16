@@ -17,8 +17,6 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
     //var recipeList = arrayListOf<RecipeItem>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.recipe_item_list, parent, false)
-        //test
-        //ViewHolder(view).setIsRecyclable(true)
         return ViewHolder(view)
     }
 
@@ -45,10 +43,6 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
         return recipeList!!.size
     }
 
-    /*fun getRecipeList() : ArrayList<RecipeItem> {
-        return recipeList as ArrayList<RecipeItem>
-    }*/
-
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val viewImage: ImageView
         val viewLabel: TextView
@@ -68,6 +62,5 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
 
     init {
         this.recipeList = recipeList
-        //this.notifyDataSetChanged()
     }
 }

@@ -1,24 +1,18 @@
-package com.example.exampgr208.ui.fragments
+package com.example.exampgr208.logic.activities
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
 import com.example.exampgr208.data.repository.MainRepository
-import com.example.exampgr208.logic.activities.SearchActivity
 import com.example.exampgr208.ui.RecipeItemAdapter
+import com.example.exampgr208.ui.fragments.RecipeBrowserFragment
 import kotlinx.coroutines.*
 
-class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
+class SearchActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     lateinit var newArrayList : ArrayList<RecipeItem>
     lateinit var tempArrayList : ArrayList<RecipeItem>
@@ -26,17 +20,17 @@ class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
     private var apiEndpointQuery = "all"
 
     @OptIn(DelicateCoroutinesApi::class)
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.recipe_browser_fragment, container, false)
-        //val intent = Intent(view.context, SearchActivity::class.java)
-        //startActivity(intent)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.recipe_browser_fragment)
+    //
+        /**^denne må vel være mainactivity hele tiden
+         * tror du må få tak i framelayout og sette den til å være recipebrowserfragment
+         * ... eller noe lignende*/
+    //
 
-        recyclerView = view.findViewById(R.id.recyclerview_main)
-        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerView = findViewById(R.id.recyclerview_main)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.setHasFixedSize(true) //trenger jeg denne?
 
         newArrayList = arrayListOf()
@@ -53,13 +47,16 @@ class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
                 recyclerView.adapter = RecipeItemAdapter(this, tempArrayList)
             }
         }
-        searchEngine(view)
-        return view
+        searchEngine()
     }
 
+    /*override fun startActivity(intent: Intent?) {
+        super.startActivity(intent)
+    }*/
+
     @OptIn(DelicateCoroutinesApi::class)
-    fun searchEngine(view: View) {
-        val searchView = view.findViewById<androidx.appcompat.widget.SearchView>(R.id.search_bar)
+    fun searchEngine() {
+        val searchView = findViewById<androidx.appcompat.widget.SearchView>(R.id.search_bar)
         searchView?.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -81,5 +78,4 @@ class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
             }
         })
     }
-
 }
