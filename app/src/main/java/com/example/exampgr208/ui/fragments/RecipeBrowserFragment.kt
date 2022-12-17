@@ -17,6 +17,7 @@ import com.example.exampgr208.data.repository.MainRepository
 import com.example.exampgr208.logic.activities.SearchActivity
 import com.example.exampgr208.ui.RecipeItemAdapter
 import kotlinx.coroutines.*
+import java.io.FileNotFoundException
 
 class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
     private lateinit var recyclerView: RecyclerView
@@ -68,7 +69,13 @@ class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
                 tempArrayList.clear()
                 apiEndpointQuery = newText!!.lowercase()
                 if (apiEndpointQuery.isNotEmpty()) {
-                    GlobalScope.launch { newArrayList = MainRepository().downloadAssetList(apiEndpointQuery) }
+                    GlobalScope.launch {
+                        try {
+                            newArrayList = MainRepository().downloadAssetList(apiEndpointQuery)
+                        } catch (e: FileNotFoundException) {
+                            Log.i("catch from textchange", e.message.toString())
+                        }
+                    }
                     tempArrayList.addAll(newArrayList)
                     recyclerView.adapter!!.notifyDataSetChanged()
                 }

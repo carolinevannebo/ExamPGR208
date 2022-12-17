@@ -6,7 +6,7 @@
         <item name="colorPrimaryVariant">@color/action_bar_bg</item>
         <item name="colorOnPrimary">@color/logo_light_bg</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/white</item>
+        <item name="colorSecondary">@color/action_bar_bg</item>
         <item name="colorSecondaryVariant">@color/neutral</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->

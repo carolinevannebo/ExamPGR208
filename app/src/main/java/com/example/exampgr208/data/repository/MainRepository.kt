@@ -18,10 +18,7 @@ class MainRepository {
 
         GlobalScope.async {
             val assetData = URL("https://api.edamam.com/api/recipes/v2?app_key=2ecd749eade96f92c4303affe954eb31&app_id=8efed005&type=public&q=$apiEndpointQuery").readText()
-
             val assetHitsArray = (JSONObject(assetData).get("hits") as JSONArray)
-            //println("test" + assetHitsArray.length())
-            //Log.i("test", assetHitsArray.toString())
             (0 until assetHitsArray.length()).forEach{ item ->
                 val hitsItem = RecipeItem()
                 val assetItem = assetHitsArray.get(item)
