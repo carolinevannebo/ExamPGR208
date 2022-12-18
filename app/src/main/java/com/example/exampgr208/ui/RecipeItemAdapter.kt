@@ -1,5 +1,6 @@
 package com.example.exampgr208.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
     @JvmName("setOnItemClickListener1")
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener?) {
         this.onItemClickListener = onItemClickListener
+        Log.i("fun clickListener", this.onItemClickListener.toString())
     }
 
     /*fun setOnItemClickListener(onItemClickListener: AdapterView.OnItemClickListener) {
@@ -49,7 +51,7 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
     }*/
 
     interface OnItemClickListener {
-        fun onClick(recipeItem: RecipeItem)
+        fun onClick(position: Int)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -72,7 +74,8 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
 
         //nytt
         holder.viewLabel.setOnClickListener {
-            onItemClickListener?.onClick(recipe)
+            onItemClickListener?.onClick(position)
+            Log.i("holderHasListenerPos", onItemClickListener?.onClick(position).toString())
         }
         /*
             println("title click worked")

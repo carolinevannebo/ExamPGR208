@@ -60,7 +60,12 @@ class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
                 val adapter = RecipeItemAdapter(this, tempArrayList)
                 recyclerView.adapter = adapter
 
-                adapter.setOnItemClickListener()
+                adapter.setOnItemClickListener(object: RecipeItemAdapter.OnItemClickListener {
+                    override fun onClick(position: Int) {
+                        replaceFragment()
+                        Log.i("finished f-switching?", "done")
+                    }
+                })
                 //adapter.onAttachedToRecyclerView(recyclerView) //ny
             }
         }
@@ -68,10 +73,6 @@ class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
         searchEngine(view)
         return view
     }
-
-    /*fun setOnItemClickListener(onItemClickListener: AdapterView.OnItemClickListener) {
-        this.onItemClickListener = onItemClickListener
-    }*/
 
 
     /*private fun viewRecipe(view: View) {
@@ -86,13 +87,13 @@ class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
         }
     }*/
 
-    /*private fun replaceFragment() {
+    private fun replaceFragment() {
         childFragmentManager.beginTransaction()
             .addToBackStack(null)
             .setReorderingAllowed(true)
             .replace(R.id.recipe_browser_container, RecipeFragment())
             .commit()
-    }*/
+    }
 
 
     @OptIn(DelicateCoroutinesApi::class)
