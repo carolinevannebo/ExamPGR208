@@ -7,8 +7,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentOnAttachListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exampgr208.R
@@ -26,6 +32,8 @@ class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
     private lateinit var initialArrayList : ArrayList<RecipeItem>
     private var apiEndpointQuery = "all"
 
+    //lateinit var onItemClickListener: AdapterView.OnItemClickListener
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,8 +41,6 @@ class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.recipe_browser_fragment, container, false)
-        //val intent = Intent(view.context, SearchActivity::class.java)
-        //startActivity(intent)
 
         recyclerView = view.findViewById(R.id.recyclerview_main)
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -51,12 +57,43 @@ class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
             }
             tempArrayList.addAll(newArrayList)
             withContext(Dispatchers.Main){
-                recyclerView.adapter = RecipeItemAdapter(this, tempArrayList)
+                val adapter = RecipeItemAdapter(this, tempArrayList)
+                recyclerView.adapter = adapter
+
+                adapter.setOnItemClickListener()
+                //adapter.onAttachedToRecyclerView(recyclerView) //ny
             }
         }
+
         searchEngine(view)
         return view
     }
+
+    /*fun setOnItemClickListener(onItemClickListener: AdapterView.OnItemClickListener) {
+        this.onItemClickListener = onItemClickListener
+    }*/
+
+
+    /*private fun viewRecipe(view: View) {
+        val title = view.findViewById<TextView>(R.id.viewLabel)
+        title.setOnClickListener {
+            replaceFragment(RecipeFragment())
+        }
+
+        val content = view.findViewById<LinearLayout>(R.id.clickable_layout)
+        content.setOnClickListener {
+            replaceFragment(RecipeFragment())
+        }
+    }*/
+
+    /*private fun replaceFragment() {
+        childFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .setReorderingAllowed(true)
+            .replace(R.id.recipe_browser_container, RecipeFragment())
+            .commit()
+    }*/
+
 
     @OptIn(DelicateCoroutinesApi::class)
     fun searchEngine(view: View) {

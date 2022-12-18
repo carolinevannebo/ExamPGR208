@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.exampgr208.R
 
-class SearchHistoryFragment : Fragment() { //(R.layout.search_history_fragment)
+class RecipeFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.search_history_fragment, container, false)
+        return inflater.inflate(R.layout.recipe_fragment, container, false)
     }
-
 }

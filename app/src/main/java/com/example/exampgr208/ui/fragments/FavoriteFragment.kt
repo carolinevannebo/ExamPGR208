@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentActivity
 import com.example.exampgr208.R
 
 class FavoriteFragment : Fragment() { //(R.layout.favorite_fragment)
-    private lateinit var listener : FragmentActivity
 
     override fun onCreateView(
         inflater: LayoutInflater,
