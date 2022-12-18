@@ -5,10 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
+import com.example.exampgr208.MainActivity
 import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
 import com.example.exampgr208.ui.RecipeItemAdapter
@@ -27,7 +26,13 @@ class RecipeFragment(private var intent: Intent) : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.recipe_fragment, container, false)
 
-        //val recipeContainer = view.findViewById<LinearLayout>(R.id.recipe_item_container)
+        val backBtn : ImageButton = view.findViewById(R.id.back_btn)
+        backBtn.setOnClickListener {
+            //childFragmentManager.popBackStack()
+            //RecipeBrowserFragment().view?.let { it1 -> replaceChildFragment(it1) }
+            replaceFragment(view)
+        }
+
         val labelView : TextView = view.findViewById(R.id.viewLabel)
         val imageView : ImageView = view.findViewById(R.id.viewImage)
 
@@ -40,4 +45,16 @@ class RecipeFragment(private var intent: Intent) : Fragment() {
 
         return view
     }
+
+    private fun replaceFragment(view: View) {
+        val frame: FrameLayout = view.findViewById(R.id.recipe_layout)
+        frame.removeAllViews()
+
+        childFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .setReorderingAllowed(true)
+            .replace(frame.id, RecipeBrowserFragment())
+            .commit()
+    }
+
 }

@@ -57,7 +57,7 @@ class RecipeBrowserFragment : Fragment() {
                         intent.putExtra("label", newArrayList[position].label)
                         intent.putExtra("image", newArrayList[position].image)
 
-                        replaceChildFragment(view, intent)
+                        replaceFragment(view, intent)
                         Log.i("finished f-switching?", "done")
                     }
                 })
@@ -68,14 +68,38 @@ class RecipeBrowserFragment : Fragment() {
         return view
     }
 
-    private fun replaceChildFragment(view: View, intent: Intent) {
+    private fun replaceFragment(view: View, intent: Intent) {
+        //val parent: RelativeLayout = view.findViewById(R.id.recipe_browser_container)
+        val frame: FrameLayout = view.findViewById(R.id.recipe_browser_layout)
+        frame.removeAllViews()
+
+        childFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .setReorderingAllowed(true)
+            .replace(frame.id, RecipeFragment(intent))
+            //???.hide(RecipeBrowserFragment())
+            //.replace(this.id, RecipeFragment(intent))
+            //.add(parent.id, RecipeFragment(intent))
+            .commit()
+
+        /*val backBtn = RecipeFragment(intent).requireView().findViewById<ImageButton>(R.id.back_btn)
+        if (backBtn.isPressed) {
+            parent.removeAllViews()
+            childFragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .setReorderingAllowed(true)
+
+        }*/
+    }
+
+    fun navigateBackToParentFragment(view: View) {
         val parent: RelativeLayout = view.findViewById(R.id.recipe_browser_container)
         parent.removeAllViews()
 
         childFragmentManager.beginTransaction()
             .addToBackStack(null)
             .setReorderingAllowed(true)
-            .replace(R.id.recipe_browser_container, RecipeFragment(intent))
+            .add(parent.id, RecipeBrowserFragment())
             .commit()
     }
 
