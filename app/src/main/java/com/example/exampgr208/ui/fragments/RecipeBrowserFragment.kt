@@ -87,6 +87,9 @@ class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
     }*/
 
     private fun replaceFragment(view: View) {
+        val parent: RelativeLayout = view.findViewById(R.id.recipe_browser_container)
+        parent.removeAllViews()
+
         childFragmentManager.beginTransaction()
             .addToBackStack(null)
             .setReorderingAllowed(true)
