@@ -34,8 +34,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".logic.activities.SearchActivity" />
-
     </application>
 
 </manifest>

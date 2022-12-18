@@ -93,8 +93,10 @@ class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
             .replace(R.id.recipe_browser_container, RecipeFragment())
             .commit()
 
-        val container = view.findViewById<RelativeLayout>(R.id.recipe_browser_container)
-        container.isVisible = false
+        //val container = view.findViewById<RelativeLayout>(R.id.recipe_browser_container)
+        //container.isVisible = false
+        //container.isActivated = false
+
     }
 
 
