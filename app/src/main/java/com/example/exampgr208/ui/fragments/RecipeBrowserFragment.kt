@@ -7,16 +7,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentOnAttachListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.exampgr208.MainActivity
 import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
 import com.example.exampgr208.data.repository.MainRepository
@@ -61,12 +60,12 @@ class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
                 recyclerView.adapter = adapter
 
                 adapter.setOnItemClickListener(object: RecipeItemAdapter.OnItemClickListener {
+
                     override fun onClick(position: Int) {
-                        replaceFragment()
+                        replaceFragment(view)
                         Log.i("finished f-switching?", "done")
                     }
                 })
-                //adapter.onAttachedToRecyclerView(recyclerView) //ny
             }
         }
 
@@ -87,12 +86,15 @@ class RecipeBrowserFragment : Fragment() {//(R.layout.recipe_browser_fragment)
         }
     }*/
 
-    private fun replaceFragment() {
+    private fun replaceFragment(view: View) {
         childFragmentManager.beginTransaction()
             .addToBackStack(null)
             .setReorderingAllowed(true)
             .replace(R.id.recipe_browser_container, RecipeFragment())
             .commit()
+
+        val container = view.findViewById<RelativeLayout>(R.id.recipe_browser_container)
+        container.isVisible = false
     }
 
 

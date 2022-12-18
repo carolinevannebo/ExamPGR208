@@ -75,7 +75,6 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
         //nytt
         holder.viewLabel.setOnClickListener {
             onItemClickListener?.onClick(position)
-            Log.i("holderHasListenerPos", onItemClickListener?.onClick(position).toString())
         }
         /*
             println("title click worked")
