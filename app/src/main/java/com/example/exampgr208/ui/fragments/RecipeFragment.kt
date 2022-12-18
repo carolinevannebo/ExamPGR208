@@ -2,6 +2,7 @@ package com.example.exampgr208.ui.fragments
 
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
@@ -43,10 +44,11 @@ class RecipeFragment(private var intent: Intent) : Fragment() {
 
         val bundle : Bundle? = intent.extras
         val label = bundle!!.getString("label")
-        val imageId = bundle.getInt("image")
+        val imageByteArray = bundle.getByteArray("image")
+        val image = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray!!.size)
 
         labelView.text = label
-        imageView.setImageResource(imageId)
+        imageView.setImageBitmap(image)
 
         return view
     }

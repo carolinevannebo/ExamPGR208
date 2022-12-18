@@ -15,15 +15,11 @@ import kotlinx.coroutines.CoroutineScope
 class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayList<RecipeItem>) : // var private val context: Context
     RecyclerView.Adapter<RecipeItemAdapter.ViewHolder>() {
 
-    //private lateinit var onItemClickListener: AdapterView.OnItemClickListener //new
     private var onItemClickListener: OnItemClickListener? = null
     var recipeList = RecipeList().recipeList
 
-    //lateinit var childFragmentManager: FragmentManager // ny
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.recipe_item_list, parent, false)
-        //childFragmentManager = RecipeBrowserFragment().childFragmentManager //ny
-        //RecipeBrowserFragment().isAdded
         return ViewHolder(view)
     }
 
@@ -32,23 +28,6 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
         this.onItemClickListener = onItemClickListener
         Log.i("fun clickListener", this.onItemClickListener.toString())
     }
-
-    /*fun setOnItemClickListener(onItemClickListener: AdapterView.OnItemClickListener) {
-        this.onItemClickListener = object : OnItemClickListener, AdapterView.OnItemClickListener {
-            override fun onClick(viewHolder: ViewHolder) {
-
-            }
-
-            override fun onItemClick(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                TODO("Not yet implemented")
-            }
-        }
-    }*/
 
     interface OnItemClickListener {
         fun onClick(position: Int)

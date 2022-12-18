@@ -1,6 +1,7 @@
 package com.example.exampgr208.ui.fragments
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.example.exampgr208.data.RecipeItem
 import com.example.exampgr208.data.repository.MainRepository
 import com.example.exampgr208.ui.RecipeItemAdapter
 import kotlinx.coroutines.*
+import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 
 class RecipeBrowserFragment : Fragment() {
@@ -55,7 +57,13 @@ class RecipeBrowserFragment : Fragment() {
                     override fun onClick(position: Int) {
                         val intent = Intent(context, RecipeFragment::class.java)
                         intent.putExtra("label", newArrayList[position].label)
-                        intent.putExtra("image", newArrayList[position].image)
+
+                        val bitmap = newArrayList[position].image
+                        val stream = ByteArrayOutputStream()
+                        bitmap!!.compress(Bitmap.CompressFormat.PNG, 90, stream)
+                        val byteArray = stream.toByteArray()
+
+                        intent.putExtra("image", byteArray)
 
                         replaceFragment(view, intent)
                         Log.i("finished f-switching?", "done")
