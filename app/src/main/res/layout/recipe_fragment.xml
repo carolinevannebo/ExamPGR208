@@ -8,10 +8,11 @@
     android:id="@+id/recipe_layout">
 
     <LinearLayout
-        android:id="@+id/recipe_item_container"
+        android:id="@+id/recipe_container"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -22,8 +23,24 @@
                 android:id="@+id/back_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="10dp"
                 android:src="@drawable/back"
+                android:background="@color/lighter_bg"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <CheckBox
+                android:id="@+id/checkFavoriteBtn"
+                android:button="@drawable/favorite_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:clickable="true"
                 android:focusable="true"/>
 
@@ -34,18 +51,8 @@
                 android:textColor="#000"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:text="Title"
                 android:layout_margin="10dp"
                 android:gravity="center"/>
-
-            <CheckBox
-                android:id="@+id/checkFavoriteBtn"
-                android:button="@drawable/favorite_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:clickable="true"
-                android:focusable="true" />
 
         </LinearLayout>
 

@@ -2,8 +2,6 @@ package com.example.exampgr208
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageButton
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 //import com.example.exampgr208.data.database.AppDatabase

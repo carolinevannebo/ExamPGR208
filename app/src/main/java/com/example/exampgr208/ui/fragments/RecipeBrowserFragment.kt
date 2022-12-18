@@ -69,7 +69,6 @@ class RecipeBrowserFragment : Fragment() {
     }
 
     private fun replaceFragment(view: View, intent: Intent) {
-        //val parent: RelativeLayout = view.findViewById(R.id.recipe_browser_container)
         val frame: FrameLayout = view.findViewById(R.id.recipe_browser_layout)
         frame.removeAllViews()
 
@@ -77,29 +76,6 @@ class RecipeBrowserFragment : Fragment() {
             .addToBackStack(null)
             .setReorderingAllowed(true)
             .replace(frame.id, RecipeFragment(intent))
-            //???.hide(RecipeBrowserFragment())
-            //.replace(this.id, RecipeFragment(intent))
-            //.add(parent.id, RecipeFragment(intent))
-            .commit()
-
-        /*val backBtn = RecipeFragment(intent).requireView().findViewById<ImageButton>(R.id.back_btn)
-        if (backBtn.isPressed) {
-            parent.removeAllViews()
-            childFragmentManager.beginTransaction()
-                .addToBackStack(null)
-                .setReorderingAllowed(true)
-
-        }*/
-    }
-
-    fun navigateBackToParentFragment(view: View) {
-        val parent: RelativeLayout = view.findViewById(R.id.recipe_browser_container)
-        parent.removeAllViews()
-
-        childFragmentManager.beginTransaction()
-            .addToBackStack(null)
-            .setReorderingAllowed(true)
-            .add(parent.id, RecipeBrowserFragment())
             .commit()
     }
 
