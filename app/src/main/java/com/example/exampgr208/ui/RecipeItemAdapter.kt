@@ -76,20 +76,8 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
         holder.viewLabel.setOnClickListener {
             onItemClickListener?.onClick(position)
         }
-        /*
-            println("title click worked")
-            replaceChildFragment(RecipeBrowserFragment().childFragmentManager)
-            println("childFragmentManager transaction finished")
-        }*/
 
     }
-    /*private fun replaceChildFragment(childFragmentManager: FragmentManager) {
-        childFragmentManager.beginTransaction()
-            .addToBackStack(null)
-            .setReorderingAllowed(true)
-            .replace(R.id.recipe_browser_container, RecipeFragment())
-            .commit()
-    }*/
 
     override fun getItemCount(): Int {
         return recipeList!!.size
