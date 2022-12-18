@@ -22,7 +22,8 @@ data class RecipeItem(
     @ColumnInfo(name = "cautions") override var cautions: String? = null,
     @ColumnInfo(name = "ingredientLines") override var ingredientLines: String? = null,
     @ColumnInfo(name = "mealType") override var mealType: String? = null,
-    @ColumnInfo(name = "calories") override var calories: Int? = null
+    @ColumnInfo(name = "calories") override var calories: Int? = null,
+    @ColumnInfo(name = "isFavorite") override var isFavorite: Boolean = false
 ) : IRecipe, Serializable { //du har lagt til override på alle val for at den skal kunne arve fra interface
     override fun toString(): String {
         return "$label"

@@ -53,20 +53,26 @@ class RecipeBrowserFragment : Fragment() {
                 recyclerView.adapter = adapter
 
                 adapter.setOnItemClickListener(object: RecipeItemAdapter.OnItemClickListener {
-
                     override fun onClick(position: Int) {
                         val intent = Intent(context, RecipeFragment::class.java)
-                        intent.putExtra("label", newArrayList[position].label)
 
                         val bitmap = newArrayList[position].image
                         val stream = ByteArrayOutputStream()
                         bitmap!!.compress(Bitmap.CompressFormat.PNG, 90, stream)
                         val byteArray = stream.toByteArray()
 
+                        intent.putExtra("label", newArrayList[position].label)
                         intent.putExtra("image", byteArray)
+                        intent.putExtra("isFavorite", newArrayList[position].isFavorite)
 
                         replaceFragment(view, intent)
                         Log.i("finished f-switching?", "done")
+                    }
+                })
+
+                adapter.setOnItemCheckListener(object: RecipeItemAdapter.OnItemCheckListener {
+                    override fun onChecked(position: Int, isChecked: Boolean) {
+                        newArrayList[position].isFavorite = isChecked
                     }
                 })
             }

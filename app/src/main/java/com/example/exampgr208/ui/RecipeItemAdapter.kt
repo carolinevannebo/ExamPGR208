@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +17,8 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
     RecyclerView.Adapter<RecipeItemAdapter.ViewHolder>() {
 
     private var onItemClickListener: OnItemClickListener? = null
-    var recipeList = RecipeList().recipeList
+    private var onItemCheckListener: OnItemCheckListener? = null
+    private var recipeList = RecipeList().recipeList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.recipe_item_list, parent, false)
@@ -29,8 +31,16 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
         Log.i("fun clickListener", this.onItemClickListener.toString())
     }
 
+    fun setOnItemCheckListener(onItemCheckListener: OnItemCheckListener?) {
+        this.onItemCheckListener = onItemCheckListener
+    }
+
     interface OnItemClickListener {
         fun onClick(position: Int)
+    }
+
+    interface OnItemCheckListener {
+        fun onChecked(position: Int, isChecked: Boolean)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -51,9 +61,18 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
         holder.viewMealType.text = mealTypeString
         holder.viewCalories.text = caloriesString
 
-        //nytt
         holder.viewLabel.setOnClickListener {
             onItemClickListener?.onClick(position)
+        }
+
+        holder.viewCheckFavBtn.setOnCheckedChangeListener { view, isChecked ->
+            if (view is CheckBox) {
+                if (view.isChecked) {
+                    onItemCheckListener?.onChecked(position, isChecked = true)
+                } else {
+                    onItemCheckListener?.onChecked(position, isChecked = false)
+                }
+            }
         }
 
     }
@@ -70,6 +89,7 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
         val viewMealType: TextView
         val viewCalories: TextView
         //val contentContainer: LinearLayout //ny
+        var viewCheckFavBtn: CheckBox
         init {
             viewImage = itemView.findViewById(R.id.viewImage)
             viewLabel = itemView.findViewById(R.id.viewLabel)
@@ -78,6 +98,7 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
             viewMealType = itemView.findViewById(R.id.viewMealType)
             viewCalories = itemView.findViewById(R.id.viewCalories)
             //contentContainer = itemView.findViewById(R.id.clickable_layout) //ny
+            viewCheckFavBtn = itemView.findViewById(R.id.checkFavoriteBtn)
         }
     }
 

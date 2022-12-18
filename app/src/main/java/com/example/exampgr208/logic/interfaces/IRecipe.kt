@@ -15,4 +15,5 @@ interface IRecipe {
     val ingredientLines: String?
     val mealType: String?
     val calories: Int?
+    val isFavorite: Boolean
 }
