@@ -54,7 +54,7 @@ class RecipeItemAdapter(private val context: CoroutineScope,
         val caloriesString = "Calories: " + recipe.calories.toString()
 
         //holder.viewImage.setImageBitmap(recipe.image)
-        holder.viewImage.setImageBitmap(recipe.getImage())
+        holder.viewImage.setImageBitmap(recipe.convertImage())
         holder.viewLabel.text = recipe.label
         holder.viewYield.text = yieldString
         holder.viewDiet.text = dietString
@@ -76,6 +76,7 @@ class RecipeItemAdapter(private val context: CoroutineScope,
         }
 
     }
+
 
     override fun getItemCount(): Int {
         return recipeList!!.size

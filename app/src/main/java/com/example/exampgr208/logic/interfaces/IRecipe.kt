@@ -16,4 +16,5 @@ interface IRecipe {
     val mealType: String?
     val calories: Int?
     val isFavorite: Boolean
+    fun convertImage(): Bitmap?
 }

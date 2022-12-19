@@ -3,7 +3,6 @@ package com.example.exampgr208.data
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Parcelable
-import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -15,23 +14,24 @@ import java.io.Serializable
 @Parcelize
 @Entity(tableName = "recipes")
 data class RecipeItem(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = true) var id: Int? = 0,
     @Json(name = "uri") override var uri: String? = null,
     @ColumnInfo(name = "label") override var label: String? = null,
     @ColumnInfo(name = "image") override var image: ByteArray? = null,
     @ColumnInfo(name = "source") override var source: String? = null,
     @ColumnInfo(name = "url") override var url: String? = null,
     @ColumnInfo(name = "yield") override var yield: Int? = null,
-    @ColumnInfo(name = "dietLabels") override var dietLabels: String? = null,
-    @ColumnInfo(name = "healthLabels") override var healthLabels: String? = null,
+    @ColumnInfo(name = "diet_labels") override var dietLabels: String? = null,
+    @ColumnInfo(name = "health_labels") override var healthLabels: String? = null,
     @ColumnInfo(name = "cautions") override var cautions: String? = null,
-    @ColumnInfo(name = "ingredientLines") override var ingredientLines: String? = null,
-    @ColumnInfo(name = "mealType") override var mealType: String? = null,
+    @ColumnInfo(name = "ingredients") override var ingredientLines: String? = null,
+    @ColumnInfo(name = "meal_type") override var mealType: String? = null,
     @ColumnInfo(name = "calories") override var calories: Int? = null,
-    @ColumnInfo(name = "isFavorite") override var isFavorite: Boolean = false
+    @ColumnInfo(name = "is_favorite") override var isFavorite: Boolean = false
 ) : IRecipe, Serializable, Parcelable {
 
-    fun getImage(): Bitmap? {
+    //@JvmName("getImage1")
+    override fun convertImage(): Bitmap? {
         return image?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
     }
 
@@ -45,6 +45,7 @@ data class RecipeItem(
 
         other as RecipeItem
 
+        if (id != other.id) return false
         if (uri != other.uri) return false
         if (label != other.label) return false
         if (image != null) {
@@ -66,7 +67,8 @@ data class RecipeItem(
     }
 
     override fun hashCode(): Int {
-        var result = uri?.hashCode() ?: 0
+        var result = id ?: 0
+        result = 31 * result + (uri?.hashCode() ?: 0)
         result = 31 * result + (label?.hashCode() ?: 0)
         result = 31 * result + (image?.contentHashCode() ?: 0)
         result = 31 * result + (source?.hashCode() ?: 0)
@@ -81,5 +83,6 @@ data class RecipeItem(
         result = 31 * result + isFavorite.hashCode()
         return result
     }
+
 
 }

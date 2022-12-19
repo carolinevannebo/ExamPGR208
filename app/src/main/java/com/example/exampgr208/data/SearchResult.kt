@@ -16,12 +16,12 @@ data class SearchResult(
     @ColumnInfo(name = "result") var searchResult: ArrayList<RecipeItem>? = null
 ) {
     @TypeConverter
-    fun getSearchResult(): String {
+    fun getSearchResults(): String {
         return RecipeListConverter().fromList(searchResult)
     }
 
     @TypeConverter
-    fun setSearchResult(json: String) {
+    fun setSearchResults(json: String) {
         searchResult = RecipeListConverter().toList(json)
     }
 }

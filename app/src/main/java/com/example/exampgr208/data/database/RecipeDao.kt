@@ -25,15 +25,4 @@ interface RecipeDao {
     @Query("SELECT * FROM search_results")
     fun getAllSearchResults(): List<SearchResult>
 
-    /*@Query("SELECT * FROM recipe")
-    fun getAll(): List<RecipeItem>
-
-    @Query("SELECT * FROM recipe WHERE uri IN (:recipeItemIds)")
-    fun loadAllByIds(recipeItemIds: Array<String>): List<RecipeItem>
-
-    @Insert
-    fun insertAll(vararg recipeItems: List<RecipeItem>)
-
-    @Delete
-    fun delete(RecipeItem: RecipeItem)*/
 }

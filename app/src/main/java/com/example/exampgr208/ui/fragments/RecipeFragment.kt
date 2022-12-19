@@ -47,12 +47,11 @@ class RecipeFragment(private var intent: Intent) : Fragment() {
         val isFavorite = bundle!!.getBoolean("isFavorite")
         val label = bundle.getString("label")
         val imageByteArray = bundle.getByteArray("image")
-        //val image = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray!!.size)
+        val image = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray!!.size)
 
         checkBoxView.isChecked = isFavorite
         labelView.text = label
-        //imageView.setImageBitmap(image)
-        imageView.setImageBitmap(recipeItem.getImage())
+        imageView.setImageBitmap(image)
 
         return view
     }
