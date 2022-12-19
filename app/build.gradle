@@ -51,26 +51,27 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.startup:startup-runtime:1.1.1' //ny etter crash nr.?
+    implementation 'androidx.startup:startup-runtime:1.1.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
     //databases
-    implementation 'androidx.room:room-runtime:2.4.3' //ny
-    kapt 'androidx.room:room-runtime:2.4.3' //ny
+    implementation 'androidx.room:room-runtime:2.4.3'
+    kapt 'androidx.room:room-runtime:2.4.3'
     kapt 'androidx.room:room-compiler:2.4.3'
     implementation 'androidx.room:room-ktx:2.4.3'
+    implementation 'com.google.code.gson:gson:2.8.6' //ny
 
     //json
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0' //ny3
-    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0' //ny3
-    implementation 'com.squareup.moshi:moshi:1.14.0' //ny3
-    implementation 'com.squareup.moshi:moshi-kotlin:1.14.0' //ny3
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    implementation 'com.squareup.moshi:moshi:1.14.0'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.14.0'
 
     //needed to fix gradle exception
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0' //ny5
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //test for designing recyclerview with cardview
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'com.google.android.material:material:1.7.0' //vent er denne duplicate?
 }

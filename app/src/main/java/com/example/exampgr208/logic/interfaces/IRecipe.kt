@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 interface IRecipe {
     val uri: String?
     val label: String?
-    val image: Bitmap?
+    val image: ByteArray?
     val source: String?
     val url: String?
     val yield: Int?

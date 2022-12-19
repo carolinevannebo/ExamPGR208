@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
+import com.example.exampgr208.data.database.DatabaseSingleton
 import com.example.exampgr208.data.repository.MainRepository
 import com.example.exampgr208.ui.RecipeItemAdapter
 import kotlinx.coroutines.*
@@ -61,13 +62,14 @@ class RecipeBrowserFragment : Fragment() {
                     override fun onClick(position: Int) {
                         val intent = Intent(context, RecipeFragment::class.java)
 
-                        val bitmap = newArrayList[position].image
+                        /*val bitmap = newArrayList[position].image
                         val stream = ByteArrayOutputStream()
                         bitmap!!.compress(Bitmap.CompressFormat.PNG, 0, stream)
-                        val byteArray = stream.toByteArray()
+                        val byteArray = stream.toByteArray()*/
 
                         intent.putExtra("label", newArrayList[position].label)
-                        intent.putExtra("image", byteArray)
+                        //intent.putExtra("image", byteArray)
+                        intent.putExtra("image", newArrayList[position].image)
                         intent.putExtra("isFavorite", newArrayList[position].isFavorite) //midlertidig løsning for å bevare check on favorite
 
                         replaceFragment(view, intent)
@@ -78,6 +80,8 @@ class RecipeBrowserFragment : Fragment() {
                 adapter.setOnItemCheckListener(object: RecipeItemAdapter.OnItemCheckListener {
                     override fun onChecked(position: Int, isChecked: Boolean) {
                         newArrayList[position].isFavorite = isChecked
+                        Log.i("favorite?", newArrayList[position].isFavorite.toString())
+                        Log.i("isChecked?", isChecked.toString())
                     }
                 })
             }
@@ -85,6 +89,12 @@ class RecipeBrowserFragment : Fragment() {
 
         searchEngine(view)
         return view
+    }
+
+    private fun registerFavoriteRecipe(recipe: RecipeItem) {
+        val database = context?.let { DatabaseSingleton.getInstance(it) }
+        val recipeDao = database!!.recipeDao()
+        recipeDao.insert(recipe)
     }
 
     private fun replaceFragment(view: View, intent: Intent) {

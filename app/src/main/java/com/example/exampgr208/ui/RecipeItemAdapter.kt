@@ -10,15 +10,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
-import com.example.exampgr208.data.RecipeList
 import kotlinx.coroutines.CoroutineScope
 
-class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayList<RecipeItem>) : // var private val context: Context
-    RecyclerView.Adapter<RecipeItemAdapter.ViewHolder>() {
+class RecipeItemAdapter(private val context: CoroutineScope,
+                        private var recipeList: ArrayList<RecipeItem>
+) : RecyclerView.Adapter<RecipeItemAdapter.ViewHolder>() {
 
     private var onItemClickListener: OnItemClickListener? = null
     private var onItemCheckListener: OnItemCheckListener? = null
-    private var recipeList = RecipeList().recipeList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.recipe_item_list, parent, false)
@@ -54,7 +53,8 @@ class RecipeItemAdapter(private val context: CoroutineScope, recipeList: ArrayLi
         val mealTypeString = "Meal Type: " + recipe.mealType
         val caloriesString = "Calories: " + recipe.calories.toString()
 
-        holder.viewImage.setImageBitmap(recipe.image)
+        //holder.viewImage.setImageBitmap(recipe.image)
+        holder.viewImage.setImageBitmap(recipe.getImage())
         holder.viewLabel.text = recipe.label
         holder.viewYield.text = yieldString
         holder.viewDiet.text = dietString

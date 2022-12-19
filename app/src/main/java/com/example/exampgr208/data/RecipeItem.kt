@@ -1,19 +1,24 @@
 package com.example.exampgr208.data
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Parcelable
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.exampgr208.logic.interfaces.IRecipe
 import com.squareup.moshi.Json
-import org.json.JSONArray
+import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
-@Entity(tableName = "Recipe")
+@Parcelize
+@Entity(tableName = "recipes")
 data class RecipeItem(
-    @PrimaryKey @Json(name = "uri") override var uri: String? = null, // skal label være PK?
-    @ColumnInfo(name = "label") override var label: String? = null, //mulig val må endres til var, null er vel bare default?
-    @ColumnInfo(name = "image") override var image: Bitmap? = null,
+    @PrimaryKey(autoGenerate = true)
+    @Json(name = "uri") override var uri: String? = null,
+    @ColumnInfo(name = "label") override var label: String? = null,
+    @ColumnInfo(name = "image") override var image: ByteArray? = null,
     @ColumnInfo(name = "source") override var source: String? = null,
     @ColumnInfo(name = "url") override var url: String? = null,
     @ColumnInfo(name = "yield") override var yield: Int? = null,
@@ -24,19 +29,57 @@ data class RecipeItem(
     @ColumnInfo(name = "mealType") override var mealType: String? = null,
     @ColumnInfo(name = "calories") override var calories: Int? = null,
     @ColumnInfo(name = "isFavorite") override var isFavorite: Boolean = false
-) : IRecipe, Serializable { //du har lagt til override på alle val for at den skal kunne arve fra interface
+) : IRecipe, Serializable, Parcelable {
+
+    fun getImage(): Bitmap? {
+        return image?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
+    }
+
     override fun toString(): String {
         return "$label"
     }
 
-    /*fun ingredientLinesToString() : String {
-        var string = ""
-        if (ingredientLines != null) {
-            for (line in this.ingredientLines!!) {
-                string += "$line#"
-            }
-        }
-        return string
-    }*/
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as RecipeItem
+
+        if (uri != other.uri) return false
+        if (label != other.label) return false
+        if (image != null) {
+            if (other.image == null) return false
+            if (!image.contentEquals(other.image)) return false
+        } else if (other.image != null) return false
+        if (source != other.source) return false
+        if (url != other.url) return false
+        if (yield != other.yield) return false
+        if (dietLabels != other.dietLabels) return false
+        if (healthLabels != other.healthLabels) return false
+        if (cautions != other.cautions) return false
+        if (ingredientLines != other.ingredientLines) return false
+        if (mealType != other.mealType) return false
+        if (calories != other.calories) return false
+        if (isFavorite != other.isFavorite) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = uri?.hashCode() ?: 0
+        result = 31 * result + (label?.hashCode() ?: 0)
+        result = 31 * result + (image?.contentHashCode() ?: 0)
+        result = 31 * result + (source?.hashCode() ?: 0)
+        result = 31 * result + (url?.hashCode() ?: 0)
+        result = 31 * result + (yield ?: 0)
+        result = 31 * result + (dietLabels?.hashCode() ?: 0)
+        result = 31 * result + (healthLabels?.hashCode() ?: 0)
+        result = 31 * result + (cautions?.hashCode() ?: 0)
+        result = 31 * result + (ingredientLines?.hashCode() ?: 0)
+        result = 31 * result + (mealType?.hashCode() ?: 0)
+        result = 31 * result + (calories ?: 0)
+        result = 31 * result + isFavorite.hashCode()
+        return result
+    }
 
 }

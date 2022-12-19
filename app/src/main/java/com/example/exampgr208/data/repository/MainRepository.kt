@@ -31,9 +31,10 @@ class MainRepository {
                     .get("images") as JSONObject)
                     .get("REGULAR") as JSONObject)
                     .getString("url")).readBytes()
-                val image = BitmapFactory.decodeByteArray(imgByteArray, 0, imgByteArray.size)
+                //val image = BitmapFactory.decodeByteArray(imgByteArray, 0, imgByteArray.size)
 
-                hitsItem.image = image
+                //hitsItem.image = image
+                hitsItem.image = imgByteArray
                 hitsItem.source = recipe.getString("source")
                 hitsItem.url = recipe.getString("url")
                 hitsItem.yield = recipe.getInt("yield")
