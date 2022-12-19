@@ -52,18 +52,23 @@ class RecipeBrowserFragment : Fragment() {
                 val adapter = RecipeItemAdapter(this, tempArrayList)
                 recyclerView.adapter = adapter
 
+                val favoriteRecipes = tempArrayList.filter { recipe: RecipeItem ->
+                    recipe.isFavorite
+                }
+                //favoriteRecipes skal til DB
+
                 adapter.setOnItemClickListener(object: RecipeItemAdapter.OnItemClickListener {
                     override fun onClick(position: Int) {
                         val intent = Intent(context, RecipeFragment::class.java)
 
                         val bitmap = newArrayList[position].image
                         val stream = ByteArrayOutputStream()
-                        bitmap!!.compress(Bitmap.CompressFormat.PNG, 90, stream)
+                        bitmap!!.compress(Bitmap.CompressFormat.PNG, 0, stream)
                         val byteArray = stream.toByteArray()
 
                         intent.putExtra("label", newArrayList[position].label)
                         intent.putExtra("image", byteArray)
-                        intent.putExtra("isFavorite", newArrayList[position].isFavorite)
+                        intent.putExtra("isFavorite", newArrayList[position].isFavorite) //midlertidig løsning for å bevare check on favorite
 
                         replaceFragment(view, intent)
                         Log.i("finished f-switching?", "done")

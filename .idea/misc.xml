@@ -14,7 +14,7 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1645" />
         <entry key="app/src/main/res/drawable/manage_search-48px.xml" value="0.1925" />
         <entry key="app/src/main/res/drawable/textlines.xml" value="0.206" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/favorite_fragment.xml" value="0.2128623188405797" />
         <entry key="app/src/main/res/layout/no_search_result.xml" value="0.1393939393939394" />
         <entry key="app/src/main/res/layout/recipe_browser_fragment.xml" value="0.1" />
