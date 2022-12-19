@@ -2,7 +2,6 @@ package com.example.exampgr208.data.database
 
 import android.content.Context
 import androidx.room.Room
-import kotlinx.coroutines.CoroutineScope
 
 object DatabaseSingleton {
 

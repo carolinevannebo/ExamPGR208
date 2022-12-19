@@ -43,7 +43,7 @@ class RecipeItemAdapter(private val context: CoroutineScope,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val recipe : RecipeItem = recipeList!![position]
+        val recipe : RecipeItem = recipeList[position]
 
         val yieldString = "Yield: " + recipe.yield.toString()
         var dietString = "Diet: Not specified"
@@ -53,7 +53,6 @@ class RecipeItemAdapter(private val context: CoroutineScope,
         val mealTypeString = "Meal Type: " + recipe.mealType
         val caloriesString = "Calories: " + recipe.calories.toString()
 
-        //holder.viewImage.setImageBitmap(recipe.image)
         holder.viewImage.setImageBitmap(recipe.convertImage())
         holder.viewLabel.text = recipe.label
         holder.viewYield.text = yieldString
@@ -65,7 +64,7 @@ class RecipeItemAdapter(private val context: CoroutineScope,
             onItemClickListener?.onClick(position)
         }
 
-        holder.viewCheckFavBtn.setOnCheckedChangeListener { view, isChecked ->
+        holder.viewCheckFavBtn.setOnCheckedChangeListener { view, _ ->
             if (view is CheckBox) {
                 if (view.isChecked) {
                     onItemCheckListener?.onChecked(position, isChecked = true)
@@ -77,9 +76,8 @@ class RecipeItemAdapter(private val context: CoroutineScope,
 
     }
 
-
     override fun getItemCount(): Int {
-        return recipeList!!.size
+        return recipeList.size
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

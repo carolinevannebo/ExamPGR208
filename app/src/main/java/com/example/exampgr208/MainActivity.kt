@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-//import com.example.exampgr208.data.database.AppDatabase
-//import com.example.exampgr208.data.database.RecipeItemDao
 import com.example.exampgr208.databinding.ActivityMainBinding
 import com.example.exampgr208.ui.fragments.FavoriteFragment
 import com.example.exampgr208.ui.fragments.RecipeBrowserFragment

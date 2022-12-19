@@ -17,6 +17,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -61,7 +67,7 @@ dependencies {
     kapt 'androidx.room:room-runtime:2.4.3'
     kapt 'androidx.room:room-compiler:2.4.3'
     implementation 'androidx.room:room-ktx:2.4.3'
-    implementation 'com.google.code.gson:gson:2.8.6' //ny
+    implementation 'com.google.code.gson:gson:2.8.9' //ny
 
     //json
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -71,7 +77,4 @@ dependencies {
 
     //needed to fix gradle exception
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
-    //test for designing recyclerview with cardview
-    implementation 'com.google.android.material:material:1.7.0' //vent er denne duplicate?
 }

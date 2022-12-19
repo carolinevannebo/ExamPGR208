@@ -30,7 +30,6 @@ data class RecipeItem(
     @ColumnInfo(name = "is_favorite") override var isFavorite: Boolean = false
 ) : IRecipe, Serializable, Parcelable {
 
-    //@JvmName("getImage1")
     override fun convertImage(): Bitmap? {
         return image?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
     }
@@ -83,6 +82,5 @@ data class RecipeItem(
         result = 31 * result + isFavorite.hashCode()
         return result
     }
-
 
 }
