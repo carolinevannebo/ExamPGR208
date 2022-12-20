@@ -1,10 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-parcelize' //ny
+    id 'kotlin-parcelize'
 }
 
-apply plugin: 'kotlin-kapt' //ny
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdk 33

@@ -23,7 +23,6 @@ class RecipeBrowserFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     lateinit var newArrayList : ArrayList<RecipeItem>
     lateinit var tempArrayList : ArrayList<RecipeItem>
-    private lateinit var initialArrayList : ArrayList<RecipeItem>
     private var apiEndpointQuery = "all"
     lateinit var database : RecipeDatabase
     lateinit var recipeDao : RecipeDao
@@ -42,16 +41,9 @@ class RecipeBrowserFragment : Fragment() {
 
         newArrayList = arrayListOf()
         tempArrayList = arrayListOf()
-        initialArrayList = arrayListOf()
 
         GlobalScope.launch {
-            //initialArrayList = MainRepository().downloadAssetList(apiEndpointQuery)
-            newArrayList = MainRepository().downloadAssetList(apiEndpointQuery)
-
-            /*initialArrayList.forEach {
-                newArrayList.add(it)
-            }
-            newArrayList.addAll(initialArrayList)*/
+            newArrayList = MainRepository().downloadAssetList(apiEndpointQuery).take(20) as ArrayList<RecipeItem>
             tempArrayList.addAll(newArrayList)
 
             withContext(Dispatchers.Main){
@@ -63,23 +55,7 @@ class RecipeBrowserFragment : Fragment() {
 
                 adapter.setOnItemClickListener(object: RecipeItemAdapter.OnItemClickListener {
                     override fun onClick(position: Int) {
-                        /*val intent = Intent(context, RecipeFragment::class.java)
-
-                        intent.putExtra("uri", newArrayList[position].uri)
-                        intent.putExtra("label", newArrayList[position].label)
-                        intent.putExtra("image", newArrayList[position].image)
-                        intent.putExtra("isFavorite", newArrayList[position].isFavorite) //midlertidig løsning for å bevare check on favorite
-                        //intent.putExtra("test", newArrayList[position] as Parcelable)
-
-                        val selectedRecipe = newArrayList[position]
-                        val args = Bundle()
-                        args.putParcelableArrayList("recipes", newArrayList)
-                        args.putParcelable("selectedRecipe", selectedRecipe)
-                        val recipeFragment = RecipeFragment()
-                        recipeFragment.arguments = args
-                        replaceFragment(view)*/
-
-                        //replaceFragment(view, intent)
+                        Log.i("Recipe values", newArrayList[position].toString())
                         replaceFragment(view, newArrayList[position])
                     }
                 })
@@ -93,12 +69,12 @@ class RecipeBrowserFragment : Fragment() {
 
                             if (recipe.isFavorite) {
                                 addRecipeToFavorites(recipe)
+                                Log.i("Recipe values", newArrayList[position].toString())
                             } else if (!recipe.isFavorite) {
                                 removeRecipeFromFavorites(recipe)
+                                Log.i("Recipe values", newArrayList[position].toString())
                             }
                         }
-                        //Log.i("favorite?", newArrayList[position].isFavorite.toString())
-                        //Log.i("isChecked?", isChecked.toString())
                     }
                 })
             }
@@ -133,16 +109,6 @@ class RecipeBrowserFragment : Fragment() {
             .replace(frame.id, RecipeFragment(recipe))
             .commit()
     }
-    /*private fun replaceFragment(view: View, intent: Intent) {
-        val frame: FrameLayout = view.findViewById(R.id.recipe_browser_layout)
-        frame.removeAllViews()
-
-        childFragmentManager.beginTransaction()
-            .addToBackStack(null)
-            .setReorderingAllowed(true)
-            .replace(frame.id, RecipeFragment(intent))
-            .commit()
-    }*/
 
     @OptIn(DelicateCoroutinesApi::class)
     fun searchEngine(view: View) {

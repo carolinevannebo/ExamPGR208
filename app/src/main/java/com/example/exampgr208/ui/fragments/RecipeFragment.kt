@@ -14,14 +14,14 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.exampgr208.MainActivity
 import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class RecipeFragment(/*private var intent: Intent*/private var recipe: RecipeItem) : Fragment() {
-    //lateinit var recipeItem: RecipeItem
+class RecipeFragment(private var recipe: RecipeItem) : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -53,18 +53,7 @@ class RecipeFragment(/*private var intent: Intent*/private var recipe: RecipeIte
         labelView.text = recipe.label
         imageView.setImageBitmap(image)
 
-        /*val bundle : Bundle? = intent.extras
-        val uri = bundle!!.getString("uri")
-        val label = bundle.getString("label")
-        val imageByteArray = bundle.getByteArray("image")
-        val image = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray!!.size)
-        var isFavorite = bundle.getBoolean("isFavorite")
-        //val test = bundle.getParcelable("test", RecipeItem)
-
-        checkBoxView.isChecked = isFavorite
-        labelView.text = label
-        imageView.setImageBitmap(image)
-        }*/
+        Log.i("recipe values:", recipe.toString())
 
         return view
     }

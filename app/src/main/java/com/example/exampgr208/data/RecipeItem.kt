@@ -35,7 +35,7 @@ data class RecipeItem(
     }
 
     override fun toString(): String {
-        return "$label"
+        return "$id\n$uri\n$label\n$image\n$source\n$url\n$yield\n$dietLabels\n$healthLabels\n$cautions\n$ingredientLines\n$mealType\n$calories\n$isFavorite"
     }
 
     override fun equals(other: Any?): Boolean {

@@ -55,6 +55,13 @@ class RecipeItemAdapter(
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        for (i in recipeList.indices) {
+            val currentRecipe = recipeList[i]
+            currentRecipe.id = i + 1
+            Log.i("id", currentRecipe.id.toString())
+        }
+
         val recipe : RecipeItem = recipeList[position]
 
         val yieldString = "Yield: " + recipe.yield.toString()
@@ -85,13 +92,13 @@ class RecipeItemAdapter(
                     val existingRecipe = recipeDao.select(recipe.uri)
                     holder.viewCheckFavBtn.isChecked = existingRecipe != null
 
-                    //holder.viewCheckFavBtn.isChecked = recipeExistsInFavorites(recipe)
-
                     if (view is CheckBox) {
                         if (view.isChecked) {
                             onItemCheckListener?.onChecked(position, isChecked = true)
+                            //lagre til db
                         } else {
                             onItemCheckListener?.onChecked(position, isChecked = false)
+                            //lagre til db
                         }
                     }
                 }
@@ -99,17 +106,6 @@ class RecipeItemAdapter(
         }
 
     }
-
-    /*private fun recipeExistsInFavorites(recipe: RecipeItem): Boolean {
-        recipeDao = database.recipeDao()
-        val existingRecipe = recipeDao.select(recipe.uri)
-        if (existingRecipe != null) {
-            return true
-            Log.i("Recipe is favorite", "$recipe matched with $existingRecipe in the database")
-        } else {
-            return false
-        }
-    }*/
 
     override fun getItemCount(): Int {
         return recipeList.size
