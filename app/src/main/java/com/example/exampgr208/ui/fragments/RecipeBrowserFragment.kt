@@ -1,8 +1,6 @@
 package com.example.exampgr208.ui.fragments
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -47,12 +45,19 @@ class RecipeBrowserFragment : Fragment() {
         initialArrayList = arrayListOf()
 
         GlobalScope.launch {
-            initialArrayList = MainRepository().downloadAssetList(apiEndpointQuery)
-            initialArrayList.forEach {
+            //initialArrayList = MainRepository().downloadAssetList(apiEndpointQuery)
+            newArrayList = MainRepository().downloadAssetList(apiEndpointQuery)
+
+            /*initialArrayList.forEach {
                 newArrayList.add(it)
             }
+            newArrayList.addAll(initialArrayList)*/
             tempArrayList.addAll(newArrayList)
+
             withContext(Dispatchers.Main){
+                database = context?.let { DatabaseSingleton.getInstance(it) }!!
+                recipeDao = database.recipeDao()
+
                 val adapter = RecipeItemAdapter(this, tempArrayList)
                 recyclerView.adapter = adapter
 
@@ -64,7 +69,15 @@ class RecipeBrowserFragment : Fragment() {
                         intent.putExtra("label", newArrayList[position].label)
                         intent.putExtra("image", newArrayList[position].image)
                         intent.putExtra("isFavorite", newArrayList[position].isFavorite) //midlertidig løsning for å bevare check on favorite
-                        //intent.putExtra("test", newArrayList[position] as Parcelable)*/
+                        //intent.putExtra("test", newArrayList[position] as Parcelable)
+
+                        val selectedRecipe = newArrayList[position]
+                        val args = Bundle()
+                        args.putParcelableArrayList("recipes", newArrayList)
+                        args.putParcelable("selectedRecipe", selectedRecipe)
+                        val recipeFragment = RecipeFragment()
+                        recipeFragment.arguments = args
+                        replaceFragment(view)*/
 
                         //replaceFragment(view, intent)
                         replaceFragment(view, newArrayList[position])
@@ -77,9 +90,6 @@ class RecipeBrowserFragment : Fragment() {
 
                         GlobalScope.launch(Dispatchers.IO) {
                             recipe.isFavorite = isChecked
-
-                            database = context?.let { DatabaseSingleton.getInstance(it) }!!
-                            recipeDao = database.recipeDao()
 
                             if (recipe.isFavorite) {
                                 addRecipeToFavorites(recipe)
@@ -109,7 +119,7 @@ class RecipeBrowserFragment : Fragment() {
             recipeDao.delete(recipe)
             Log.i("favorite removed", recipe.toString())
         } else {
-            Log.i("Recipe not found", "The recipe with id ${recipe.uri} was not found in the database")
+            Log.i("Recipe not found", "The recipe with uri ${recipe.uri} was not found in the database")
         }
     }
 

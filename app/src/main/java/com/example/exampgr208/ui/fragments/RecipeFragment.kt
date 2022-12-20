@@ -43,13 +43,15 @@ class RecipeFragment(/*private var intent: Intent*/private var recipe: RecipeIte
         val labelView : TextView = view.findViewById(R.id.viewLabel)
         val imageView : ImageView = view.findViewById(R.id.viewImage)
 
+       /* val args = arguments
+        val recipes = args?.getParcelable("recipes", RecipeItem)
+        val selectedRecipe = args?.getParcelable<RecipeItem>("selectedRecipe")*/
+
         val image = BitmapFactory.decodeByteArray(recipe.image, 0, recipe.image!!.size)
 
         checkBoxView.isChecked = recipe.isFavorite
         labelView.text = recipe.label
         imageView.setImageBitmap(image)
-
-
 
         /*val bundle : Bundle? = intent.extras
         val uri = bundle!!.getString("uri")

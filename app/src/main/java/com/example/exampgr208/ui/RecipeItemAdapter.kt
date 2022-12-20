@@ -1,5 +1,7 @@
 package com.example.exampgr208.ui
 
+import android.app.Application
+import android.app.appsearch.GlobalSearchSession
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,16 +10,25 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.exampgr208.MainActivity
 import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
-import kotlinx.coroutines.CoroutineScope
+import com.example.exampgr208.data.database.DatabaseSingleton
+import com.example.exampgr208.data.database.RecipeDao
+import com.example.exampgr208.data.database.RecipeDatabase
+import com.example.exampgr208.ui.fragments.RecipeBrowserFragment
+import kotlinx.coroutines.*
 
-class RecipeItemAdapter(private val context: CoroutineScope,
-                        private var recipeList: ArrayList<RecipeItem>
+class RecipeItemAdapter(
+    private val coroutineScope: CoroutineScope,
+    private var recipeList: ArrayList<RecipeItem>
 ) : RecyclerView.Adapter<RecipeItemAdapter.ViewHolder>() {
 
     private var onItemClickListener: OnItemClickListener? = null
     private var onItemCheckListener: OnItemCheckListener? = null
+
+    lateinit var database : RecipeDatabase
+    lateinit var recipeDao : RecipeDao
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.recipe_item_list, parent, false)
@@ -42,6 +53,7 @@ class RecipeItemAdapter(private val context: CoroutineScope,
         fun onChecked(position: Int, isChecked: Boolean)
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recipe : RecipeItem = recipeList[position]
 
@@ -59,23 +71,45 @@ class RecipeItemAdapter(private val context: CoroutineScope,
         holder.viewDiet.text = dietString
         holder.viewMealType.text = mealTypeString
         holder.viewCalories.text = caloriesString
-        holder.viewCheckFavBtn.isChecked = recipe.isFavorite
 
         holder.viewLabel.setOnClickListener {
             onItemClickListener?.onClick(position)
         }
 
         holder.viewCheckFavBtn.setOnCheckedChangeListener { view, _ ->
-            if (view is CheckBox) {
-                if (view.isChecked) {
-                    onItemCheckListener?.onChecked(position, isChecked = true)
-                } else {
-                    onItemCheckListener?.onChecked(position, isChecked = false)
+            GlobalScope.launch(Dispatchers.IO) {
+                if(::database.isInitialized && ::recipeDao.isInitialized) {
+                    database = RecipeBrowserFragment().database
+                    recipeDao = database.recipeDao()
+
+                    val existingRecipe = recipeDao.select(recipe.uri)
+                    holder.viewCheckFavBtn.isChecked = existingRecipe != null
+
+                    //holder.viewCheckFavBtn.isChecked = recipeExistsInFavorites(recipe)
+
+                    if (view is CheckBox) {
+                        if (view.isChecked) {
+                            onItemCheckListener?.onChecked(position, isChecked = true)
+                        } else {
+                            onItemCheckListener?.onChecked(position, isChecked = false)
+                        }
+                    }
                 }
             }
         }
 
     }
+
+    /*private fun recipeExistsInFavorites(recipe: RecipeItem): Boolean {
+        recipeDao = database.recipeDao()
+        val existingRecipe = recipeDao.select(recipe.uri)
+        if (existingRecipe != null) {
+            return true
+            Log.i("Recipe is favorite", "$recipe matched with $existingRecipe in the database")
+        } else {
+            return false
+        }
+    }*/
 
     override fun getItemCount(): Int {
         return recipeList.size

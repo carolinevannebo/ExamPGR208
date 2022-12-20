@@ -66,7 +66,7 @@ data class RecipeItem(
     }
 
     override fun hashCode(): Int {
-        var result = id ?: 0
+        var result = id
         result = 31 * result + (uri?.hashCode() ?: 0)
         result = 31 * result + (label?.hashCode() ?: 0)
         result = 31 * result + (image?.contentHashCode() ?: 0)
