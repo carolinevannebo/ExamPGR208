@@ -1,5 +1,6 @@
 package com.example.exampgr208
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,10 +15,13 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var fragmentManager: FragmentManager
     private lateinit var binding: ActivityMainBinding
+    var context: Context = this.applicationContext
 
     override fun onCreate(savedInstanceState: Bundle?) {
         fragmentManager = supportFragmentManager
         binding = ActivityMainBinding.inflate(layoutInflater)
+        //context = context.applicationContext
+        //context = baseContext!!
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         replaceFragment(RecipeBrowserFragment())

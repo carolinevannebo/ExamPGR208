@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.exampgr208.MainActivity
 import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
 import com.example.exampgr208.data.database.DatabaseSingleton
@@ -24,8 +25,8 @@ class RecipeBrowserFragment : Fragment() {
     lateinit var newArrayList : ArrayList<RecipeItem>
     lateinit var tempArrayList : ArrayList<RecipeItem>
     private var apiEndpointQuery = "all"
-    lateinit var database : RecipeDatabase
-    lateinit var recipeDao : RecipeDao
+    //lateinit var database : RecipeDatabase
+    //lateinit var recipeDao : RecipeDao
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreateView(
@@ -47,10 +48,13 @@ class RecipeBrowserFragment : Fragment() {
             tempArrayList.addAll(newArrayList)
 
             withContext(Dispatchers.Main){
-                database = context?.let { DatabaseSingleton.getInstance(it) }!!
-                recipeDao = database.recipeDao()
+                /*database = context?.let { DatabaseSingleton.getInstance(it) }!!
+                recipeDao = database.recipeDao()*/
 
-                val adapter = RecipeItemAdapter(this, tempArrayList)
+                val adapter = RecipeItemAdapter(this, tempArrayList) //du la til en context
+                //val adapter = RecipeItemAdapter(this, tempArrayList, requireContext().applicationContext)
+                //val adapter = RecipeItemAdapter(this, tempArrayList, requireNotNull(MainActivity().context))
+
                 recyclerView.adapter = adapter
 
                 adapter.setOnItemClickListener(object: RecipeItemAdapter.OnItemClickListener {
@@ -68,10 +72,10 @@ class RecipeBrowserFragment : Fragment() {
                             recipe.isFavorite = isChecked
 
                             if (recipe.isFavorite) {
-                                addRecipeToFavorites(recipe)
+                                //addRecipeToFavorites(recipe)  <- gjør dette i adapter
                                 Log.i("Recipe values", newArrayList[position].toString())
                             } else if (!recipe.isFavorite) {
-                                removeRecipeFromFavorites(recipe)
+                                //removeRecipeFromFavorites(recipe) <- gjør dette i adapter
                                 Log.i("Recipe values", newArrayList[position].toString())
                             }
                         }
@@ -84,7 +88,7 @@ class RecipeBrowserFragment : Fragment() {
         return view
     }
 
-    private fun addRecipeToFavorites(recipe: RecipeItem) {
+    /*private fun addRecipeToFavorites(recipe: RecipeItem) {
         recipeDao.insert(recipe)
         Log.i("favorite added", recipe.toString())
     }
@@ -97,7 +101,7 @@ class RecipeBrowserFragment : Fragment() {
         } else {
             Log.i("Recipe not found", "The recipe with uri ${recipe.uri} was not found in the database")
         }
-    }
+    }*/
 
     private fun replaceFragment(view: View, recipe: RecipeItem) {
         val frame: FrameLayout = view.findViewById(R.id.recipe_browser_layout)

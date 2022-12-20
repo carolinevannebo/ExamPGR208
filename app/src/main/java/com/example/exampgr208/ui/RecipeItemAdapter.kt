@@ -2,6 +2,7 @@ package com.example.exampgr208.ui
 
 import android.app.Application
 import android.app.appsearch.GlobalSearchSession
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +22,8 @@ import kotlinx.coroutines.*
 
 class RecipeItemAdapter(
     private val coroutineScope: CoroutineScope,
-    private var recipeList: ArrayList<RecipeItem>
+    private var recipeList: ArrayList<RecipeItem>,
+    private val context: Context = MainActivity().applicationContext
 ) : RecyclerView.Adapter<RecipeItemAdapter.ViewHolder>() {
 
     private var onItemClickListener: OnItemClickListener? = null
@@ -85,9 +87,11 @@ class RecipeItemAdapter(
 
         holder.viewCheckFavBtn.setOnCheckedChangeListener { view, _ ->
             GlobalScope.launch(Dispatchers.IO) {
+
+                database = context.let { DatabaseSingleton.getInstance(it) }
+                recipeDao = database.recipeDao()
+
                 if(::database.isInitialized && ::recipeDao.isInitialized) {
-                    database = RecipeBrowserFragment().database
-                    recipeDao = database.recipeDao()
 
                     val existingRecipe = recipeDao.select(recipe.uri)
                     holder.viewCheckFavBtn.isChecked = existingRecipe != null
@@ -95,16 +99,31 @@ class RecipeItemAdapter(
                     if (view is CheckBox) {
                         if (view.isChecked) {
                             onItemCheckListener?.onChecked(position, isChecked = true)
-                            //lagre til db
+                            addRecipeToFavorites(recipe)    //lagre til db
                         } else {
                             onItemCheckListener?.onChecked(position, isChecked = false)
-                            //lagre til db
+                            removeRecipeFromFavorites(recipe) //lagre til db
                         }
                     }
                 }
             }
         }
 
+    }
+
+    private fun addRecipeToFavorites(recipe: RecipeItem) {
+        recipeDao.insert(recipe)
+        Log.i("favorite added", recipe.toString())
+    }
+
+    private fun removeRecipeFromFavorites(recipe: RecipeItem) {
+        val existingRecipe = recipeDao.select(recipe.uri)
+        if (existingRecipe != null) {
+            recipeDao.delete(recipe)
+            Log.i("favorite removed", recipe.toString())
+        } else {
+            Log.i("Recipe not found", "The recipe with uri ${recipe.uri} was not found in the database")
+        }
     }
 
     override fun getItemCount(): Int {
