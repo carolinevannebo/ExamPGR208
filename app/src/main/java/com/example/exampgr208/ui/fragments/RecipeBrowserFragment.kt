@@ -1,8 +1,8 @@
 package com.example.exampgr208.ui.fragments
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
 import com.example.exampgr208.data.database.DatabaseSingleton
+import com.example.exampgr208.data.database.RecipeDao
+import com.example.exampgr208.data.database.RecipeDatabase
 import com.example.exampgr208.data.repository.MainRepository
 import com.example.exampgr208.ui.RecipeItemAdapter
 import kotlinx.coroutines.*
-import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 
 class RecipeBrowserFragment : Fragment() {
@@ -26,6 +27,8 @@ class RecipeBrowserFragment : Fragment() {
     lateinit var tempArrayList : ArrayList<RecipeItem>
     private lateinit var initialArrayList : ArrayList<RecipeItem>
     private var apiEndpointQuery = "all"
+    lateinit var database : RecipeDatabase
+    lateinit var recipeDao : RecipeDao
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreateView(
@@ -53,35 +56,39 @@ class RecipeBrowserFragment : Fragment() {
                 val adapter = RecipeItemAdapter(this, tempArrayList)
                 recyclerView.adapter = adapter
 
-                val favoriteRecipes = tempArrayList.filter { recipe: RecipeItem ->
-                    recipe.isFavorite
-                }
-                //favoriteRecipes skal til DB
-
                 adapter.setOnItemClickListener(object: RecipeItemAdapter.OnItemClickListener {
                     override fun onClick(position: Int) {
-                        val intent = Intent(context, RecipeFragment::class.java)
+                        /*val intent = Intent(context, RecipeFragment::class.java)
 
-                        /*val bitmap = newArrayList[position].image
-                        val stream = ByteArrayOutputStream()
-                        bitmap!!.compress(Bitmap.CompressFormat.PNG, 0, stream)
-                        val byteArray = stream.toByteArray()*/
-
+                        intent.putExtra("uri", newArrayList[position].uri)
                         intent.putExtra("label", newArrayList[position].label)
-                        //intent.putExtra("image", byteArray)
                         intent.putExtra("image", newArrayList[position].image)
                         intent.putExtra("isFavorite", newArrayList[position].isFavorite) //midlertidig løsning for å bevare check on favorite
+                        //intent.putExtra("test", newArrayList[position] as Parcelable)*/
 
-                        replaceFragment(view, intent)
-                        Log.i("finished f-switching?", "done")
+                        //replaceFragment(view, intent)
+                        replaceFragment(view, newArrayList[position])
                     }
                 })
 
                 adapter.setOnItemCheckListener(object: RecipeItemAdapter.OnItemCheckListener {
                     override fun onChecked(position: Int, isChecked: Boolean) {
-                        newArrayList[position].isFavorite = isChecked
-                        Log.i("favorite?", newArrayList[position].isFavorite.toString())
-                        Log.i("isChecked?", isChecked.toString())
+                        val recipe = newArrayList[position]
+
+                        GlobalScope.launch(Dispatchers.IO) {
+                            recipe.isFavorite = isChecked
+
+                            database = context?.let { DatabaseSingleton.getInstance(it) }!!
+                            recipeDao = database.recipeDao()
+
+                            if (recipe.isFavorite) {
+                                addRecipeToFavorites(recipe)
+                            } else if (!recipe.isFavorite) {
+                                removeRecipeFromFavorites(recipe)
+                            }
+                        }
+                        //Log.i("favorite?", newArrayList[position].isFavorite.toString())
+                        //Log.i("isChecked?", isChecked.toString())
                     }
                 })
             }
@@ -91,13 +98,32 @@ class RecipeBrowserFragment : Fragment() {
         return view
     }
 
-    private fun registerFavoriteRecipe(recipe: RecipeItem) {
-        val database = context?.let { DatabaseSingleton.getInstance(it) }
-        val recipeDao = database!!.recipeDao()
+    private fun addRecipeToFavorites(recipe: RecipeItem) {
         recipeDao.insert(recipe)
+        Log.i("favorite added", recipe.toString())
     }
 
-    private fun replaceFragment(view: View, intent: Intent) {
+    private fun removeRecipeFromFavorites(recipe: RecipeItem) {
+        val existingRecipe = recipeDao.select(recipe.uri)
+        if (existingRecipe != null) {
+            recipeDao.delete(recipe)
+            Log.i("favorite removed", recipe.toString())
+        } else {
+            Log.i("Recipe not found", "The recipe with id ${recipe.uri} was not found in the database")
+        }
+    }
+
+    private fun replaceFragment(view: View, recipe: RecipeItem) {
+        val frame: FrameLayout = view.findViewById(R.id.recipe_browser_layout)
+        frame.removeAllViews()
+
+        childFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .setReorderingAllowed(true)
+            .replace(frame.id, RecipeFragment(recipe))
+            .commit()
+    }
+    /*private fun replaceFragment(view: View, intent: Intent) {
         val frame: FrameLayout = view.findViewById(R.id.recipe_browser_layout)
         frame.removeAllViews()
 
@@ -106,7 +132,7 @@ class RecipeBrowserFragment : Fragment() {
             .setReorderingAllowed(true)
             .replace(frame.id, RecipeFragment(intent))
             .commit()
-    }
+    }*/
 
     @OptIn(DelicateCoroutinesApi::class)
     fun searchEngine(view: View) {

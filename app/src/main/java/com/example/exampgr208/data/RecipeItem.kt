@@ -14,7 +14,7 @@ import java.io.Serializable
 @Parcelize
 @Entity(tableName = "recipes")
 data class RecipeItem(
-    @PrimaryKey(autoGenerate = true) var id: Int? = 0,
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
     @Json(name = "uri") override var uri: String? = null,
     @ColumnInfo(name = "label") override var label: String? = null,
     @ColumnInfo(name = "image") override var image: ByteArray? = null,

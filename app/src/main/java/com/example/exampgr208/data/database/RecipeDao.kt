@@ -25,4 +25,7 @@ interface RecipeDao {
     @Query("SELECT * FROM search_results")
     fun getAllSearchResults(): List<SearchResult>
 
+    @Query("SELECT * FROM recipes WHERE uri = :uri")
+    fun select(uri: String?): RecipeItem?
+
 }

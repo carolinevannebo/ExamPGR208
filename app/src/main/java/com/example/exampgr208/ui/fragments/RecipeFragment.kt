@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +16,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class RecipeFragment(private var intent: Intent) : Fragment() {
-    lateinit var recipeItem: RecipeItem
+class RecipeFragment(/*private var intent: Intent*/private var recipe: RecipeItem) : Fragment() {
+    //lateinit var recipeItem: RecipeItem
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -39,15 +43,26 @@ class RecipeFragment(private var intent: Intent) : Fragment() {
         val labelView : TextView = view.findViewById(R.id.viewLabel)
         val imageView : ImageView = view.findViewById(R.id.viewImage)
 
-        val bundle : Bundle? = intent.extras
-        val isFavorite = bundle!!.getBoolean("isFavorite")
+        val image = BitmapFactory.decodeByteArray(recipe.image, 0, recipe.image!!.size)
+
+        checkBoxView.isChecked = recipe.isFavorite
+        labelView.text = recipe.label
+        imageView.setImageBitmap(image)
+
+
+
+        /*val bundle : Bundle? = intent.extras
+        val uri = bundle!!.getString("uri")
         val label = bundle.getString("label")
         val imageByteArray = bundle.getByteArray("image")
         val image = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray!!.size)
+        var isFavorite = bundle.getBoolean("isFavorite")
+        //val test = bundle.getParcelable("test", RecipeItem)
 
         checkBoxView.isChecked = isFavorite
         labelView.text = label
         imageView.setImageBitmap(image)
+        }*/
 
         return view
     }

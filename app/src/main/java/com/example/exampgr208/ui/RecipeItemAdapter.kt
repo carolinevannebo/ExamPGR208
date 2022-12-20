@@ -59,6 +59,7 @@ class RecipeItemAdapter(private val context: CoroutineScope,
         holder.viewDiet.text = dietString
         holder.viewMealType.text = mealTypeString
         holder.viewCalories.text = caloriesString
+        holder.viewCheckFavBtn.isChecked = recipe.isFavorite
 
         holder.viewLabel.setOnClickListener {
             onItemClickListener?.onClick(position)
