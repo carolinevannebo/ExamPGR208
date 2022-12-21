@@ -82,4 +82,7 @@ dependencies {
 
     //needed to fix gradle exception
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    //fragment support
+    implementation 'androidx.fragment:fragment:1.5.5'
 }

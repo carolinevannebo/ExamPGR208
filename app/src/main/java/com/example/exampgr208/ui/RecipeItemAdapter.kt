@@ -2,7 +2,6 @@ package com.example.exampgr208.ui
 
 import android.app.Activity
 import android.app.Application
-import android.app.appsearch.GlobalSearchSession
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,13 +17,12 @@ import com.example.exampgr208.data.RecipeItem
 import com.example.exampgr208.data.database.DatabaseSingleton
 import com.example.exampgr208.data.database.RecipeDao
 import com.example.exampgr208.data.database.RecipeDatabase
-import com.example.exampgr208.ui.fragments.RecipeBrowserFragment
 import kotlinx.coroutines.*
+import androidx.fragment.app.Fragment
 
 class RecipeItemAdapter(
     private val coroutineScope: CoroutineScope,
     private var recipeList: ArrayList<RecipeItem>
-    //private val context: Context = MainActivity().applicationContext
 ) : RecyclerView.Adapter<RecipeItemAdapter.ViewHolder>() {
 
     private var onItemClickListener: OnItemClickListener? = null
