@@ -11,7 +11,7 @@ object DatabaseSingleton {
 
     private var INSTANCE: RecipeDatabase? = null
 
-    fun getInstance(context: MainActivity): RecipeDatabase {
+    fun getInstance(context: Context): RecipeDatabase { //løste seg med context: MainActivity
         Log.i("context in singleton", context.toString())
         if (INSTANCE == null) {
             synchronized(RecipeDatabase::class) {
@@ -21,7 +21,7 @@ object DatabaseSingleton {
         return INSTANCE!!
     }
 
-    private fun buildRoomDB(context: MainActivity) =
+    private fun buildRoomDB(context: Context) =
         Room.databaseBuilder(context.applicationContext, //NullPointerException: Attempt to invoke virtual method 'android.content.Context android.content.Context.getApplicationContext()' on a null object reference
             RecipeDatabase::class.java, "recipe_database")
             .build()

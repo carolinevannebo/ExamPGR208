@@ -7,7 +7,7 @@ import com.example.exampgr208.data.SearchResult
 @Dao
 interface RecipeDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(recipe: RecipeItem)
 
     @Update

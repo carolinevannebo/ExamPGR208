@@ -22,14 +22,15 @@ import androidx.fragment.app.Fragment
 
 class RecipeItemAdapter(
     private val coroutineScope: CoroutineScope,
-    private var recipeList: ArrayList<RecipeItem>
+    private var recipeList: ArrayList<RecipeItem>,
+    private val recipeDao: RecipeDao
 ) : RecyclerView.Adapter<RecipeItemAdapter.ViewHolder>() {
 
     private var onItemClickListener: OnItemClickListener? = null
     private var onItemCheckListener: OnItemCheckListener? = null
 
-    lateinit var database : RecipeDatabase
-    lateinit var recipeDao : RecipeDao
+    //lateinit var database : RecipeDatabase
+    //lateinit var recipeDao : RecipeDao
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.recipe_item_list, parent, false)
@@ -57,11 +58,11 @@ class RecipeItemAdapter(
     @OptIn(DelicateCoroutinesApi::class)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        for (i in recipeList.indices) {
+        /*for (i in recipeList.indices) {
             val currentRecipe = recipeList[i]
             currentRecipe.id = i + 1
             Log.i("id", currentRecipe.id.toString())
-        }
+        }*/
 
         val recipe : RecipeItem = recipeList[position]
 
@@ -86,22 +87,23 @@ class RecipeItemAdapter(
 
         holder.viewCheckFavBtn.setOnCheckedChangeListener { view, _ ->
             GlobalScope.launch(Dispatchers.IO) {
+                val existingRecipe = recipeDao.select(recipe.uri)
+
                 withContext(Dispatchers.Main) {
 
                     //database = context.let { DatabaseSingleton.getInstance(it) }
-                    val database : RecipeDatabase = DatabaseSingleton.getInstance(MainActivity())
-                    recipeDao = database.recipeDao()
-
-                    val existingRecipe = recipeDao.select(recipe.uri)
+                    //val application = requireNotNull(this.activity).application
+                    //val database : RecipeDatabase = DatabaseSingleton.getInstance(MainActivity())
+                    //recipeDao = database.recipeDao()
                     holder.viewCheckFavBtn.isChecked = existingRecipe != null
 
                     if (view is CheckBox) {
                         if (view.isChecked) {
                             onItemCheckListener?.onChecked(position, isChecked = true)
-                            addRecipeToFavorites(recipe)    //lagre til db
+                            //addRecipeToFavorites(recipe)    //lagre til db
                         } else {
                             onItemCheckListener?.onChecked(position, isChecked = false)
-                            removeRecipeFromFavorites(recipe) //lagre til db
+                            //removeRecipeFromFavorites(recipe) //lagre til db
                         }
                     }
                 }
