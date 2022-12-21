@@ -48,13 +48,7 @@ class RecipeBrowserFragment : Fragment() {
             tempArrayList.addAll(newArrayList)
 
             withContext(Dispatchers.Main){
-                /*database = context?.let { DatabaseSingleton.getInstance(it) }!!
-                recipeDao = database.recipeDao()*/
-
-                val adapter = RecipeItemAdapter(this, tempArrayList) //du la til en context
-                //val adapter = RecipeItemAdapter(this, tempArrayList, requireContext().applicationContext)
-                //val adapter = RecipeItemAdapter(this, tempArrayList, requireNotNull(MainActivity().context))
-
+                val adapter = RecipeItemAdapter(this, tempArrayList)
                 recyclerView.adapter = adapter
 
                 adapter.setOnItemClickListener(object: RecipeItemAdapter.OnItemClickListener {

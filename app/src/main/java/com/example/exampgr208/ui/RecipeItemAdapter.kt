@@ -1,5 +1,6 @@
 package com.example.exampgr208.ui
 
+import android.app.Activity
 import android.app.Application
 import android.app.appsearch.GlobalSearchSession
 import android.content.Context
@@ -22,17 +23,14 @@ import kotlinx.coroutines.*
 
 class RecipeItemAdapter(
     private val coroutineScope: CoroutineScope,
-    private var recipeList: ArrayList<RecipeItem>,
+    private var recipeList: ArrayList<RecipeItem>
     //private val context: Context = MainActivity().applicationContext
 ) : RecyclerView.Adapter<RecipeItemAdapter.ViewHolder>() {
 
     private var onItemClickListener: OnItemClickListener? = null
     private var onItemCheckListener: OnItemCheckListener? = null
 
-    private val context: Context = MainActivity().applicationContext
-
-    //lateinit var database : RecipeDatabase
-    var database : RecipeDatabase = DatabaseSingleton.getInstance(context)
+    lateinit var database : RecipeDatabase
     lateinit var recipeDao : RecipeDao
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -90,20 +88,23 @@ class RecipeItemAdapter(
 
         holder.viewCheckFavBtn.setOnCheckedChangeListener { view, _ ->
             GlobalScope.launch(Dispatchers.IO) {
+                withContext(Dispatchers.Main) {
 
-                database = context.let { DatabaseSingleton.getInstance(it) }
-                recipeDao = database.recipeDao()
+                    //database = context.let { DatabaseSingleton.getInstance(it) }
+                    val database : RecipeDatabase = DatabaseSingleton.getInstance(MainActivity())
+                    recipeDao = database.recipeDao()
 
-                val existingRecipe = recipeDao.select(recipe.uri)
-                holder.viewCheckFavBtn.isChecked = existingRecipe != null
+                    val existingRecipe = recipeDao.select(recipe.uri)
+                    holder.viewCheckFavBtn.isChecked = existingRecipe != null
 
-                if (view is CheckBox) {
-                    if (view.isChecked) {
-                        onItemCheckListener?.onChecked(position, isChecked = true)
-                        addRecipeToFavorites(recipe)    //lagre til db
-                    } else {
-                        onItemCheckListener?.onChecked(position, isChecked = false)
-                        removeRecipeFromFavorites(recipe) //lagre til db
+                    if (view is CheckBox) {
+                        if (view.isChecked) {
+                            onItemCheckListener?.onChecked(position, isChecked = true)
+                            addRecipeToFavorites(recipe)    //lagre til db
+                        } else {
+                            onItemCheckListener?.onChecked(position, isChecked = false)
+                            removeRecipeFromFavorites(recipe) //lagre til db
+                        }
                     }
                 }
 
