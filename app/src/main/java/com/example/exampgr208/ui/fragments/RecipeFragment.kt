@@ -17,11 +17,18 @@ import androidx.fragment.app.Fragment
 import com.example.exampgr208.MainActivity
 import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
+import com.example.exampgr208.data.database.DatabaseSingleton
+import com.example.exampgr208.data.database.RecipeDao
+import com.example.exampgr208.data.database.RecipeDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RecipeFragment(private var recipe: RecipeItem) : Fragment() {
+
+    lateinit var database : RecipeDatabase
+    lateinit var recipeDao : RecipeDao
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -30,6 +37,10 @@ class RecipeFragment(private var recipe: RecipeItem) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.recipe_fragment, container, false)
+
+        val application = requireNotNull(this.activity).application
+        database = DatabaseSingleton.getInstance(application)
+        recipeDao = database.recipeDao()
 
         val recipeContainer : LinearLayout = view.findViewById(R.id.recipe_container)
         recipeContainer.background = getDrawableWithRadius()
@@ -40,13 +51,23 @@ class RecipeFragment(private var recipe: RecipeItem) : Fragment() {
         }
 
         val checkBoxView : CheckBox = view.findViewById(R.id.checkFavoriteBtn)
+        checkBoxView.setOnCheckedChangeListener { view, _ ->
+            GlobalScope.launch(Dispatchers.IO) {
+
+                    if (view is CheckBox) {
+                        if (view.isChecked) {
+                            recipe.isFavorite = true
+                            addRecipeToFavorites(recipe)
+                        } else {
+                            recipe.isFavorite = false
+                            removeRecipeFromFavorites(recipe)
+                        }
+                    }
+            }
+        }
+
         val labelView : TextView = view.findViewById(R.id.viewLabel)
         val imageView : ImageView = view.findViewById(R.id.viewImage)
-
-       /* val args = arguments
-        val recipes = args?.getParcelable("recipes", RecipeItem)
-        val selectedRecipe = args?.getParcelable<RecipeItem>("selectedRecipe")*/
-
         val image = BitmapFactory.decodeByteArray(recipe.image, 0, recipe.image!!.size)
 
         checkBoxView.isChecked = recipe.isFavorite
@@ -56,6 +77,21 @@ class RecipeFragment(private var recipe: RecipeItem) : Fragment() {
         Log.i("recipe values:", recipe.toString())
 
         return view
+    }
+
+    private fun addRecipeToFavorites(recipe: RecipeItem) {
+        recipeDao.insert(recipe)
+        Log.i("favorite added", recipe.toString())
+    }
+
+    private fun removeRecipeFromFavorites(recipe: RecipeItem) {
+        val existingRecipe = recipeDao.select(recipe.uri)
+        if (existingRecipe != null) {
+            recipeDao.delete(recipe)
+            Log.i("favorite removed", recipe.toString())
+        } else {
+            Log.i("Recipe not found", "The recipe with uri ${recipe.uri} was not found in the database")
+        }
     }
 
     private fun replaceFragment(view: View) {

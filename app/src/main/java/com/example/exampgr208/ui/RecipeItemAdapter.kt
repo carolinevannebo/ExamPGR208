@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exampgr208.MainActivity
@@ -85,25 +86,27 @@ class RecipeItemAdapter(
             onItemClickListener?.onClick(position)
         }
 
+        holder.contentContainer.setOnClickListener {
+            onItemClickListener?.onClick(position)
+        }
+
+        GlobalScope.launch(Dispatchers.IO) {
+            val existingRecipe = recipeDao.select(recipe.uri)
+            withContext(Dispatchers.Main) {
+                holder.viewCheckFavBtn.isChecked = existingRecipe != null
+            }
+        }
+
         holder.viewCheckFavBtn.setOnCheckedChangeListener { view, _ ->
             GlobalScope.launch(Dispatchers.IO) {
-                val existingRecipe = recipeDao.select(recipe.uri)
 
                 withContext(Dispatchers.Main) {
-
-                    //database = context.let { DatabaseSingleton.getInstance(it) }
-                    //val application = requireNotNull(this.activity).application
-                    //val database : RecipeDatabase = DatabaseSingleton.getInstance(MainActivity())
-                    //recipeDao = database.recipeDao()
-                    holder.viewCheckFavBtn.isChecked = existingRecipe != null
 
                     if (view is CheckBox) {
                         if (view.isChecked) {
                             onItemCheckListener?.onChecked(position, isChecked = true)
-                            //addRecipeToFavorites(recipe)    //lagre til db
                         } else {
                             onItemCheckListener?.onChecked(position, isChecked = false)
-                            //removeRecipeFromFavorites(recipe) //lagre til db
                         }
                     }
                 }
@@ -111,21 +114,6 @@ class RecipeItemAdapter(
             }
         }
 
-    }
-
-    private fun addRecipeToFavorites(recipe: RecipeItem) {
-        recipeDao.insert(recipe)
-        Log.i("favorite added", recipe.toString())
-    }
-
-    private fun removeRecipeFromFavorites(recipe: RecipeItem) {
-        val existingRecipe = recipeDao.select(recipe.uri)
-        if (existingRecipe != null) {
-            recipeDao.delete(recipe)
-            Log.i("favorite removed", recipe.toString())
-        } else {
-            Log.i("Recipe not found", "The recipe with uri ${recipe.uri} was not found in the database")
-        }
     }
 
     override fun getItemCount(): Int {
@@ -139,7 +127,7 @@ class RecipeItemAdapter(
         val viewDiet: TextView
         val viewMealType: TextView
         val viewCalories: TextView
-        //val contentContainer: LinearLayout //ny
+        val contentContainer: LinearLayout
         var viewCheckFavBtn: CheckBox
         init {
             viewImage = itemView.findViewById(R.id.viewImage)
@@ -148,7 +136,7 @@ class RecipeItemAdapter(
             viewDiet = itemView.findViewById(R.id.viewDiet)
             viewMealType = itemView.findViewById(R.id.viewMealType)
             viewCalories = itemView.findViewById(R.id.viewCalories)
-            //contentContainer = itemView.findViewById(R.id.clickable_layout) //ny
+            contentContainer = itemView.findViewById(R.id.clickable_layout)
             viewCheckFavBtn = itemView.findViewById(R.id.checkFavoriteBtn)
         }
     }
