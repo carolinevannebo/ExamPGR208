@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var fragmentManager: FragmentManager
     private lateinit var binding: ActivityMainBinding
-    var context: Context = this.applicationContext
+    var context: Context = this.applicationContext!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         fragmentManager = supportFragmentManager

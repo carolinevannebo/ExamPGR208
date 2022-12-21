@@ -23,13 +23,16 @@ import kotlinx.coroutines.*
 class RecipeItemAdapter(
     private val coroutineScope: CoroutineScope,
     private var recipeList: ArrayList<RecipeItem>,
-    private val context: Context = MainActivity().applicationContext
+    //private val context: Context = MainActivity().applicationContext
 ) : RecyclerView.Adapter<RecipeItemAdapter.ViewHolder>() {
 
     private var onItemClickListener: OnItemClickListener? = null
     private var onItemCheckListener: OnItemCheckListener? = null
 
-    lateinit var database : RecipeDatabase
+    private val context: Context = MainActivity().applicationContext
+
+    //lateinit var database : RecipeDatabase
+    var database : RecipeDatabase = DatabaseSingleton.getInstance(context)
     lateinit var recipeDao : RecipeDao
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -91,21 +94,19 @@ class RecipeItemAdapter(
                 database = context.let { DatabaseSingleton.getInstance(it) }
                 recipeDao = database.recipeDao()
 
-                if(::database.isInitialized && ::recipeDao.isInitialized) {
+                val existingRecipe = recipeDao.select(recipe.uri)
+                holder.viewCheckFavBtn.isChecked = existingRecipe != null
 
-                    val existingRecipe = recipeDao.select(recipe.uri)
-                    holder.viewCheckFavBtn.isChecked = existingRecipe != null
-
-                    if (view is CheckBox) {
-                        if (view.isChecked) {
-                            onItemCheckListener?.onChecked(position, isChecked = true)
-                            addRecipeToFavorites(recipe)    //lagre til db
-                        } else {
-                            onItemCheckListener?.onChecked(position, isChecked = false)
-                            removeRecipeFromFavorites(recipe) //lagre til db
-                        }
+                if (view is CheckBox) {
+                    if (view.isChecked) {
+                        onItemCheckListener?.onChecked(position, isChecked = true)
+                        addRecipeToFavorites(recipe)    //lagre til db
+                    } else {
+                        onItemCheckListener?.onChecked(position, isChecked = false)
+                        removeRecipeFromFavorites(recipe) //lagre til db
                     }
                 }
+
             }
         }
 
