@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,8 @@ import com.example.exampgr208.logic.models.SearchResult
 import com.example.exampgr208.data.database.DatabaseSingleton
 import com.example.exampgr208.data.database.RecipeDao
 import com.example.exampgr208.data.database.RecipeDatabase
+import com.example.exampgr208.logic.interfaces.OnItemClickListener
+import com.example.exampgr208.logic.models.RecipeItem
 import com.example.exampgr208.ui.adapters.SearchQueryItemAdapter
 import kotlinx.coroutines.*
 
@@ -54,11 +57,28 @@ class SearchHistoryFragment : Fragment() {
             withContext(Dispatchers.Main) {
                 val adapter = SearchQueryItemAdapter(searchQueriesArrayList, recipeDao)
                 recyclerView.adapter = adapter
+
+                adapter.setOnItemClickListener(object: OnItemClickListener {
+                    override fun onClick(position: Int) {
+                        replaceFragment(view, searchQueriesArrayList[position] )
+                    }
+                })
             }
 
         }
 
         return view
+    }
+
+    private fun replaceFragment(view: View, query: String) {
+        val frame: FrameLayout = view.findViewById(R.id.search_history_layout)
+        frame.removeAllViews()
+
+        childFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .setReorderingAllowed(true)
+            .replace(frame.id, SearchHistoryResultListFragment(query))
+            .commit()
     }
 
 }

@@ -16,6 +16,7 @@ import com.example.exampgr208.data.database.DatabaseSingleton
 import com.example.exampgr208.data.database.RecipeDao
 import com.example.exampgr208.data.database.RecipeDatabase
 import com.example.exampgr208.data.repository.MainRepository
+import com.example.exampgr208.logic.interfaces.OnItemCheckListener
 import com.example.exampgr208.logic.interfaces.OnItemClickListener
 import com.example.exampgr208.ui.adapters.RecipeItemAdapter
 import kotlinx.coroutines.*
@@ -63,37 +64,46 @@ class RecipeBrowserFragment : Fragment() {
                 val adapter = RecipeItemAdapter(this, tempArrayList, recipeDao)
                 recyclerView.adapter = adapter
 
-                adapter.setOnItemClickListener(object: OnItemClickListener {
-                    override fun onClick(position: Int) {
-                        Log.i("Recipe values", newArrayList[position].toString())
-                        replaceFragment(view, newArrayList[position])
-                    }
-                })
+                registerAdapterOnClick(view, adapter)
+                registerAdapterOnCheck(adapter)
 
-                adapter.setOnItemCheckListener(object: RecipeItemAdapter.OnItemCheckListener {
-                    override fun onChecked(position: Int, isChecked: Boolean) {
-                        val recipe = newArrayList[position]
-
-                        GlobalScope.launch(Dispatchers.IO) {
-                            recipe.isFavorite = isChecked
-
-                            if (recipe.isFavorite) {
-                                addRecipeToFavorites(recipe)
-                                Log.i("Recipe values", newArrayList[position].toString())
-                            } else if (!recipe.isFavorite) {
-                                removeRecipeFromFavorites(recipe)
-                                Log.i("Recipe values", newArrayList[position].toString())
-                            }
-                        }
-                    }
-                })
             }
         }
 
         searchView = view.findViewById(R.id.search_bar)
-        searchEngine()
+        searchEngine(view)
 
         return view
+    }
+
+    private fun registerAdapterOnClick(view: View, adapter: RecipeItemAdapter) { //test
+        adapter.setOnItemClickListener(object: OnItemClickListener {
+            override fun onClick(position: Int) {
+                Log.i("Recipe values", newArrayList[position].toString())
+                replaceFragment(view, newArrayList[position])
+            }
+        })
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun registerAdapterOnCheck(adapter: RecipeItemAdapter) {
+        adapter.setOnItemCheckListener(object: OnItemCheckListener {
+            override fun onChecked(position: Int, isChecked: Boolean) {
+                val recipe = newArrayList[position]
+
+                GlobalScope.launch(Dispatchers.IO) {
+                    recipe.isFavorite = isChecked
+
+                    if (recipe.isFavorite) {
+                        addRecipeToFavorites(recipe)
+                        Log.i("Recipe values", newArrayList[position].toString())
+                    } else if (!recipe.isFavorite) {
+                        removeRecipeFromFavorites(recipe)
+                        Log.i("Recipe values", newArrayList[position].toString())
+                    }
+                }
+            }
+        })
     }
 
     private fun addRecipeToFavorites(recipe: RecipeItem) {
@@ -124,10 +134,10 @@ class RecipeBrowserFragment : Fragment() {
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    fun searchEngine() {
+    fun searchEngine(view: View) {
         searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                //tempArrayList.clear()
+
                 if (query!!.isNotEmpty()) {
                     tempArrayList.clear()
                     apiEndpointQuery = query.lowercase()
@@ -138,7 +148,12 @@ class RecipeBrowserFragment : Fragment() {
 
                             tempArrayList.addAll(newArrayList)
                             withContext(Dispatchers.Main) {
-                                recyclerView.adapter = RecipeItemAdapter(this, tempArrayList, recipeDao) // notifydatasetchange?
+                                val newAdapter = RecipeItemAdapter(this, tempArrayList, recipeDao)
+                                recyclerView.adapter = newAdapter
+
+                                registerAdapterOnClick(view, newAdapter)
+                                registerAdapterOnCheck(newAdapter)
+                                //recyclerView.adapter = RecipeItemAdapter(this, tempArrayList, recipeDao)
                             }
 
                             GlobalScope.launch(Dispatchers.IO) {
@@ -175,7 +190,6 @@ class RecipeBrowserFragment : Fragment() {
         })
 
         searchView.setOnCloseListener { false }
-
 
     }
 

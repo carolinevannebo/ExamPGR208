@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.exampgr208.R
 import com.example.exampgr208.logic.models.RecipeItem
 import com.example.exampgr208.data.database.RecipeDao
+import com.example.exampgr208.logic.interfaces.OnItemCheckListener
 import com.example.exampgr208.logic.interfaces.OnItemClickListener
 import kotlinx.coroutines.*
 
@@ -37,10 +38,6 @@ class RecipeItemAdapter(
 
     fun setOnItemCheckListener(onItemCheckListener: OnItemCheckListener?) {
         this.onItemCheckListener = onItemCheckListener
-    }
-
-    interface OnItemCheckListener {
-        fun onChecked(position: Int, isChecked: Boolean)
     }
 
     @OptIn(DelicateCoroutinesApi::class)

@@ -14,6 +14,7 @@ import com.example.exampgr208.logic.models.RecipeItem
 import com.example.exampgr208.data.database.DatabaseSingleton
 import com.example.exampgr208.data.database.RecipeDao
 import com.example.exampgr208.data.database.RecipeDatabase
+import com.example.exampgr208.logic.interfaces.OnItemCheckListener
 import com.example.exampgr208.logic.interfaces.OnItemClickListener
 import com.example.exampgr208.ui.adapters.RecipeItemAdapter
 import kotlinx.coroutines.*
@@ -58,7 +59,7 @@ class FavoriteFragment : Fragment() {
                     }
                 })
 
-                adapter.setOnItemCheckListener(object: RecipeItemAdapter.OnItemCheckListener {
+                adapter.setOnItemCheckListener(object: OnItemCheckListener {
                     override fun onChecked(position: Int, isChecked: Boolean) {
                         val recipe = favoriteRecipesArrayList[position]
 
