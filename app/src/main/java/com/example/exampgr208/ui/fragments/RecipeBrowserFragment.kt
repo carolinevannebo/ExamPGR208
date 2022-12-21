@@ -40,7 +40,6 @@ class RecipeBrowserFragment : Fragment() {
         database = DatabaseSingleton.getInstance(application)
         recipeDao = database.recipeDao()
 
-
         recyclerView = view.findViewById(R.id.recyclerview_main)
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView.setHasFixedSize(true) //trenger jeg denne?
@@ -94,6 +93,7 @@ class RecipeBrowserFragment : Fragment() {
     }
 
     private fun addRecipeToFavorites(recipe: RecipeItem) {
+        removeRecipeFromFavorites(recipe) // ny
         recipeDao.insert(recipe)
         Log.i("favorite added", recipe.toString())
     }

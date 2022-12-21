@@ -80,6 +80,7 @@ class RecipeFragment(private var recipe: RecipeItem) : Fragment() {
     }
 
     private fun addRecipeToFavorites(recipe: RecipeItem) {
+        removeRecipeFromFavorites(recipe) // ny
         recipeDao.insert(recipe)
         Log.i("favorite added", recipe.toString())
     }
