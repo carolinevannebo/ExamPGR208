@@ -1,6 +1,5 @@
 package com.example.exampgr208.ui.fragments
 
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
@@ -14,16 +13,14 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.exampgr208.MainActivity
 import com.example.exampgr208.R
-import com.example.exampgr208.data.RecipeItem
+import com.example.exampgr208.logic.models.RecipeItem
 import com.example.exampgr208.data.database.DatabaseSingleton
 import com.example.exampgr208.data.database.RecipeDao
 import com.example.exampgr208.data.database.RecipeDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class RecipeFragment(private var recipe: RecipeItem) : Fragment() {
 

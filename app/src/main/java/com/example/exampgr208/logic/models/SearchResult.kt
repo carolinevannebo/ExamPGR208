@@ -1,4 +1,4 @@
-package com.example.exampgr208.data
+package com.example.exampgr208.logic.models
 
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
@@ -22,5 +22,9 @@ data class SearchResult(
     @TypeConverter
     fun setSearchResults(json: String) {
         searchResult = RecipeListConverter().toList(json)
+    }
+
+    override fun toString(): String {
+        return "$Id\n$query\n$searchResult"
     }
 }

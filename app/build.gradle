@@ -53,7 +53,7 @@ android {
         jvmTarget = '1.8'
     }
     namespace 'com.example.exampgr208'
-    buildToolsVersion '33.0.0'//ny
+    buildToolsVersion '33.0.0'
 }
 
 dependencies {

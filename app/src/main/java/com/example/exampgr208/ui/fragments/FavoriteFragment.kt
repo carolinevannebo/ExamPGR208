@@ -10,12 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exampgr208.R
-import com.example.exampgr208.data.RecipeItem
+import com.example.exampgr208.logic.models.RecipeItem
 import com.example.exampgr208.data.database.DatabaseSingleton
 import com.example.exampgr208.data.database.RecipeDao
 import com.example.exampgr208.data.database.RecipeDatabase
-import com.example.exampgr208.databinding.ActivityMainBinding
-import com.example.exampgr208.ui.RecipeItemAdapter
+import com.example.exampgr208.logic.interfaces.OnItemClickListener
+import com.example.exampgr208.ui.adapters.RecipeItemAdapter
 import kotlinx.coroutines.*
 
 class FavoriteFragment : Fragment() {
@@ -33,7 +33,7 @@ class FavoriteFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.favorite_fragment, container, false)
 
-        val application = requireNotNull(this.activity).application // test
+        val application = requireNotNull(this.activity).application
         database = DatabaseSingleton.getInstance(application)
         recipeDao = database.recipeDao()
 
@@ -51,7 +51,7 @@ class FavoriteFragment : Fragment() {
                 val adapter = RecipeItemAdapter(this, favoriteRecipesArrayList, recipeDao)
                 recyclerView.adapter = adapter
 
-                adapter.setOnItemClickListener(object: RecipeItemAdapter.OnItemClickListener {
+                adapter.setOnItemClickListener(object: OnItemClickListener {
                     override fun onClick(position: Int) {
                         Log.i("Recipe values", favoriteRecipesArrayList[position].toString())
                         replaceFragment(view, favoriteRecipesArrayList[position])

@@ -1,4 +1,4 @@
-package com.example.exampgr208.data
+package com.example.exampgr208.logic.models
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

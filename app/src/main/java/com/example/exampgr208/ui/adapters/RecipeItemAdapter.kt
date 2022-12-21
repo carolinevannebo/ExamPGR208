@@ -1,8 +1,5 @@
-package com.example.exampgr208.ui
+package com.example.exampgr208.ui.adapters
 
-import android.app.Activity
-import android.app.Application
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,14 +9,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.exampgr208.MainActivity
 import com.example.exampgr208.R
-import com.example.exampgr208.data.RecipeItem
-import com.example.exampgr208.data.database.DatabaseSingleton
+import com.example.exampgr208.logic.models.RecipeItem
 import com.example.exampgr208.data.database.RecipeDao
-import com.example.exampgr208.data.database.RecipeDatabase
+import com.example.exampgr208.logic.interfaces.OnItemClickListener
 import kotlinx.coroutines.*
-import androidx.fragment.app.Fragment
 
 class RecipeItemAdapter(
     private val coroutineScope: CoroutineScope,
@@ -29,9 +23,6 @@ class RecipeItemAdapter(
 
     private var onItemClickListener: OnItemClickListener? = null
     private var onItemCheckListener: OnItemCheckListener? = null
-
-    //lateinit var database : RecipeDatabase
-    //lateinit var recipeDao : RecipeDao
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.recipe_item_list, parent, false)
@@ -48,22 +39,12 @@ class RecipeItemAdapter(
         this.onItemCheckListener = onItemCheckListener
     }
 
-    interface OnItemClickListener {
-        fun onClick(position: Int)
-    }
-
     interface OnItemCheckListener {
         fun onChecked(position: Int, isChecked: Boolean)
     }
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-        /*for (i in recipeList.indices) {
-            val currentRecipe = recipeList[i]
-            currentRecipe.id = i + 1
-            Log.i("id", currentRecipe.id.toString())
-        }*/
 
         val recipe : RecipeItem = recipeList[position]
 

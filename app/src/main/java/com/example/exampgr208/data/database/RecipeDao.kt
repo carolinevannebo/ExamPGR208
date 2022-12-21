@@ -1,8 +1,8 @@
 package com.example.exampgr208.data.database
 
 import androidx.room.*
-import com.example.exampgr208.data.RecipeItem
-import com.example.exampgr208.data.SearchResult
+import com.example.exampgr208.logic.models.RecipeItem
+import com.example.exampgr208.logic.models.SearchResult
 
 @Dao
 interface RecipeDao {
@@ -24,6 +24,9 @@ interface RecipeDao {
 
     @Query("SELECT * FROM search_results")
     fun getAllSearchResults(): List<SearchResult>
+
+    @Query("SELECT search_query FROM search_results")
+    fun getAllSearchQueries(): List<String>
 
     @Query("SELECT * FROM recipes WHERE id = :id")
     fun select(id: Int): RecipeItem?

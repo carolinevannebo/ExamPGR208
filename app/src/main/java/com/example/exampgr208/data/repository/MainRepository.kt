@@ -1,6 +1,6 @@
 package com.example.exampgr208.data.repository
 
-import com.example.exampgr208.data.RecipeItem
+import com.example.exampgr208.logic.models.RecipeItem
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async

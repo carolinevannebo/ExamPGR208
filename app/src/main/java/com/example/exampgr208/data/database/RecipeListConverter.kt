@@ -3,7 +3,7 @@ package com.example.exampgr208.data.database
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.example.exampgr208.data.RecipeItem
+import com.example.exampgr208.logic.models.RecipeItem
 
 class RecipeListConverter {
     @TypeConverter
