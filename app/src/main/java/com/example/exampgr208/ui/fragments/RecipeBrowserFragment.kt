@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.exampgr208.MainActivity
 import com.example.exampgr208.R
 import com.example.exampgr208.data.RecipeItem
+import com.example.exampgr208.data.SearchResult
 import com.example.exampgr208.data.database.DatabaseSingleton
 import com.example.exampgr208.data.database.RecipeDao
 import com.example.exampgr208.data.database.RecipeDatabase
@@ -25,6 +26,7 @@ class RecipeBrowserFragment : Fragment() {
     lateinit var newArrayList : ArrayList<RecipeItem>
     lateinit var tempArrayList : ArrayList<RecipeItem>
     private var apiEndpointQuery = "all"
+    private var searchJob: Job? = null
     lateinit var database : RecipeDatabase
     lateinit var recipeDao : RecipeDao
 
@@ -92,6 +94,21 @@ class RecipeBrowserFragment : Fragment() {
         return view
     }
 
+    /*private fun debounceSearch(query: String) {
+        searchJob?.cancel()
+        searchJob = GlobalScope.launch {
+            delay(300L)
+            try {
+                apiEndpointQuery = query.lowercase()
+                newArrayList = MainRepository().downloadAssetList(apiEndpointQuery)
+
+            } catch (e: FileNotFoundException) {
+                Log.i("catch from textChange", e.message.toString())
+            }
+            tempArrayList.addAll(newArrayList)
+        }
+    }*/
+
     private fun addRecipeToFavorites(recipe: RecipeItem) {
         removeRecipeFromFavorites(recipe) // ny
         recipeDao.insert(recipe)
@@ -104,7 +121,7 @@ class RecipeBrowserFragment : Fragment() {
             recipeDao.delete(recipe)
             Log.i("favorite removed", recipe.toString())
         } else {
-            Log.i("Recipe not found", "The recipe with uri ${recipe.id} was not found in the database")
+            Log.i("Recipe not found", "The recipe with id ${recipe.id} was not found in the database")
         }
     }
 
@@ -124,26 +141,41 @@ class RecipeBrowserFragment : Fragment() {
         val searchView = view.findViewById<androidx.appcompat.widget.SearchView>(R.id.search_bar)
         searchView?.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+
                 return false
             }
             override fun onQueryTextChange(newText: String?): Boolean {
                 tempArrayList.clear()
-                apiEndpointQuery = newText!!.lowercase()
-                if (apiEndpointQuery.isNotEmpty()) {
-                    GlobalScope.launch {
-                        try {
-                            newArrayList = MainRepository().downloadAssetList(apiEndpointQuery)
-                        } catch (e: FileNotFoundException) {
-                            Log.i("catch from textchange", e.message.toString())
+                //apiEndpointQuery = newText!!.lowercase()
+                //if (apiEndpointQuery.isNotEmpty()) {
+                if (newText != null) {
+                    if (newText.isNotEmpty()) {
+                        //apiEndpointQuery = newText.lowercase()
+
+                        searchJob?.cancel()
+                        searchJob = GlobalScope.launch {
+                            try {
+                                delay(200L)
+                                apiEndpointQuery = newText.lowercase()
+                                newArrayList = MainRepository().downloadAssetList(apiEndpointQuery)
+
+                            } catch (e: FileNotFoundException) {
+                                Log.i("catch from textChange", e.message.toString())
+                            }
                         }
-                    }
-                    tempArrayList.addAll(newArrayList)
-                    recyclerView.adapter!!.notifyDataSetChanged()
-                }
-                else {
-                    tempArrayList.clear()
-                    tempArrayList.addAll(newArrayList)
-                    recyclerView.adapter!!.notifyDataSetChanged()
+
+                        //debounceSearch(newText)
+
+                        tempArrayList.addAll(newArrayList)
+                        recyclerView.adapter!!.notifyDataSetChanged()
+
+                        //val searchResult = SearchResult(0, )
+                        //recipeDao.insertSearchResult(searchResult)
+                    } /*else {
+                        tempArrayList.clear()
+                        tempArrayList.addAll(newArrayList)
+                        recyclerView.adapter!!.notifyDataSetChanged()
+                    }*/
                 }
                 return false
             }

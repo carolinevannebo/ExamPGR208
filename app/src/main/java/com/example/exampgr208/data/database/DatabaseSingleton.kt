@@ -24,5 +24,6 @@ object DatabaseSingleton {
     private fun buildRoomDB(context: Context) =
         Room.databaseBuilder(context.applicationContext, //NullPointerException: Attempt to invoke virtual method 'android.content.Context android.content.Context.getApplicationContext()' on a null object reference
             RecipeDatabase::class.java, "recipe_database")
+            .fallbackToDestructiveMigration()
             .build()
 }

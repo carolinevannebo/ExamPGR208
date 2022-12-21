@@ -11,6 +11,7 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/favorite_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -21,7 +22,8 @@
             android:id="@+id/recyclerview_favorites"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"/>
+            android:paddingHorizontal="10dp"
+            android:layout_below="@+id/favorite_title"/>
 
     </RelativeLayout>
 

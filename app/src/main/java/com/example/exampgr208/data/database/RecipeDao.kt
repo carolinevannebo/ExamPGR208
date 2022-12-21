@@ -16,7 +16,7 @@ interface RecipeDao {
     @Delete
     fun delete(recipe: RecipeItem)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSearchResult(searchResult: SearchResult)
 
     @Query("SELECT * FROM recipes")

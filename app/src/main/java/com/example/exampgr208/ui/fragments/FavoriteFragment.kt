@@ -93,7 +93,7 @@ class FavoriteFragment : Fragment() {
             recipeDao.delete(recipe)
             Log.i("favorite removed", recipe.toString())
         } else {
-            Log.i("Recipe not found", "The recipe with uri ${recipe.id} was not found in the database")
+            Log.i("Recipe not found", "The recipe with id ${recipe.id} was not found in the database")
         }
     }
 
