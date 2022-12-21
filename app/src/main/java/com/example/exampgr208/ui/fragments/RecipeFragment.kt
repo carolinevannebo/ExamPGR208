@@ -51,11 +51,11 @@ class RecipeFragment(private var recipe: RecipeItem) : Fragment() {
         }
 
         val checkBoxView : CheckBox = view.findViewById(R.id.checkFavoriteBtn)
-        checkBoxView.setOnCheckedChangeListener { view, _ ->
+        checkBoxView.setOnCheckedChangeListener { checkBox, _ ->
             GlobalScope.launch(Dispatchers.IO) {
 
-                    if (view is CheckBox) {
-                        if (view.isChecked) {
+                    if (checkBox is CheckBox) {
+                        if (checkBox.isChecked) {
                             recipe.isFavorite = true
                             addRecipeToFavorites(recipe)
                         } else {
@@ -86,12 +86,12 @@ class RecipeFragment(private var recipe: RecipeItem) : Fragment() {
     }
 
     private fun removeRecipeFromFavorites(recipe: RecipeItem) {
-        val existingRecipe = recipeDao.select(recipe.uri)
+        val existingRecipe = recipeDao.select(recipe.id)
         if (existingRecipe != null) {
             recipeDao.delete(recipe)
             Log.i("favorite removed", recipe.toString())
         } else {
-            Log.i("Recipe not found", "The recipe with uri ${recipe.uri} was not found in the database")
+            Log.i("Recipe not found", "The recipe with uri ${recipe.id} was not found in the database")
         }
     }
 

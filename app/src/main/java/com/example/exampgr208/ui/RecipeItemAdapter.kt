@@ -91,7 +91,7 @@ class RecipeItemAdapter(
         }
 
         GlobalScope.launch(Dispatchers.IO) {
-            val existingRecipe = recipeDao.select(recipe.uri)
+            val existingRecipe = recipeDao.select(recipe.id)
             withContext(Dispatchers.Main) {
                 holder.viewCheckFavBtn.isChecked = existingRecipe != null
             }

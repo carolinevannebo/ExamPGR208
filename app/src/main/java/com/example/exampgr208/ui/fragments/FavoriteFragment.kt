@@ -88,12 +88,12 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun removeRecipeFromFavorites(recipe: RecipeItem) {
-        val existingRecipe = recipeDao.select(recipe.uri)
+        val existingRecipe = recipeDao.select(recipe.id)
         if (existingRecipe != null) {
             recipeDao.delete(recipe)
             Log.i("favorite removed", recipe.toString())
         } else {
-            Log.i("Recipe not found", "The recipe with uri ${recipe.uri} was not found in the database")
+            Log.i("Recipe not found", "The recipe with uri ${recipe.id} was not found in the database")
         }
     }
 
