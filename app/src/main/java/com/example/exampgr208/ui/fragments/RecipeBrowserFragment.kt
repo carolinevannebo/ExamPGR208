@@ -39,13 +39,13 @@ class RecipeBrowserFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.recipe_browser_fragment, container, false)
 
-        val application = requireNotNull(this.activity).application // test
+        val application = requireNotNull(this.activity).application
         database = DatabaseSingleton.getInstance(application)
         recipeDao = database.recipeDao()
 
         recyclerView = view.findViewById(R.id.recyclerview_main)
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        recyclerView.setHasFixedSize(true) //trenger jeg denne?
+        recyclerView.setHasFixedSize(true)
 
         newArrayList = arrayListOf()
         tempArrayList = arrayListOf()
@@ -53,6 +53,7 @@ class RecipeBrowserFragment : Fragment() {
         GlobalScope.launch {
             newArrayList = MainRepository().downloadAssetList(apiEndpointQuery).take(20) as ArrayList<RecipeItem>
             tempArrayList.addAll(newArrayList)
+
 
             for (i in tempArrayList.indices) {
                 val currentRecipe = tempArrayList[i]
@@ -107,16 +108,14 @@ class RecipeBrowserFragment : Fragment() {
     }
 
     private fun addRecipeToFavorites(recipe: RecipeItem) {
-        removeRecipeFromFavorites(recipe) // ny
+        removeRecipeFromFavorites(recipe)
         recipeDao.insert(recipe)
-        Log.i("favorite added", recipe.toString())
     }
 
     private fun removeRecipeFromFavorites(recipe: RecipeItem) {
         val existingRecipe = recipeDao.select(recipe.id)
         if (existingRecipe != null) {
             recipeDao.delete(recipe)
-            Log.i("favorite removed", recipe.toString())
         } else {
             Log.i("Recipe not found", "The recipe with id ${recipe.id} was not found in the database")
         }
@@ -145,15 +144,14 @@ class RecipeBrowserFragment : Fragment() {
                     GlobalScope.launch {
                         try {
                             newArrayList = MainRepository().downloadAssetList(apiEndpointQuery)
-
                             tempArrayList.addAll(newArrayList)
+
                             withContext(Dispatchers.Main) {
                                 val newAdapter = RecipeItemAdapter(this, tempArrayList, recipeDao)
                                 recyclerView.adapter = newAdapter
 
                                 registerAdapterOnClick(view, newAdapter)
                                 registerAdapterOnCheck(newAdapter)
-                                //recyclerView.adapter = RecipeItemAdapter(this, tempArrayList, recipeDao)
                             }
 
                             GlobalScope.launch(Dispatchers.IO) {
@@ -175,11 +173,6 @@ class RecipeBrowserFragment : Fragment() {
                         }
                     }
 
-                    //tempArrayList.addAll(newArrayList)
-                    //recyclerView.adapter!!.notifyDataSetChanged()
-
-                    //val searchResult = SearchResult(0, )
-                    //recipeDao.insertSearchResult(searchResult)
                 }
                 return false
             }

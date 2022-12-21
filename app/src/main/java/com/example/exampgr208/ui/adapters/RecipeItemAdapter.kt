@@ -77,7 +77,6 @@ class RecipeItemAdapter(
 
         holder.viewCheckFavBtn.setOnCheckedChangeListener { view, _ ->
             GlobalScope.launch(Dispatchers.IO) {
-
                 withContext(Dispatchers.Main) {
 
                     if (view is CheckBox) {

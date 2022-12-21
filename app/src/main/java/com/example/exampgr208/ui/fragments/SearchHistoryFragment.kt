@@ -55,7 +55,7 @@ class SearchHistoryFragment : Fragment() {
             }
 
             withContext(Dispatchers.Main) {
-                val adapter = SearchQueryItemAdapter(searchQueriesArrayList, recipeDao)
+                val adapter = SearchQueryItemAdapter(searchQueriesArrayList)
                 recyclerView.adapter = adapter
 
                 adapter.setOnItemClickListener(object: OnItemClickListener {

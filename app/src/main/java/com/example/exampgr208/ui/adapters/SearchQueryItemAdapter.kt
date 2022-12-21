@@ -2,7 +2,6 @@ package com.example.exampgr208.ui.adapters
 
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
-import com.example.exampgr208.data.database.RecipeDao
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +10,7 @@ import com.example.exampgr208.R
 import com.example.exampgr208.logic.interfaces.OnItemClickListener
 
 class SearchQueryItemAdapter(
-    private var searchQueriesArrayList : ArrayList<String>,
-    private val recipeDao: RecipeDao
+    private var searchQueriesArrayList : ArrayList<String>
 ) : RecyclerView.Adapter<SearchQueryItemAdapter.ViewHolder>() {
 
     private var onItemClickListener: OnItemClickListener? = null
@@ -25,7 +23,6 @@ class SearchQueryItemAdapter(
     @JvmName("setOnItemClickListener2")
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener?) {
         this.onItemClickListener = onItemClickListener
-        Log.i("fun clickListener", this.onItemClickListener.toString())
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
