@@ -49,7 +49,8 @@ class SearchHistoryResultListFragment(private var searchQuery: String) : Fragmen
 
         GlobalScope.launch(Dispatchers.IO) {
             recipeList = recipeDao.select(searchQuery) as ArrayList<RecipeItem>
-            Log.i("list from results", recipeList.toString())
+            //Log.i("list from results", recipeList.toString())
+            Log.i("list from results", recipeDao.select(searchQuery).toString())
         }
 
         //lag en liste, bruk query til å hente lista, send den til adapter

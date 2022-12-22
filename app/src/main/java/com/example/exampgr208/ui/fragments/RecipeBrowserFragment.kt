@@ -113,7 +113,8 @@ class RecipeBrowserFragment : Fragment() {
     }
 
     private fun removeRecipeFromFavorites(recipe: RecipeItem) {
-        val existingRecipe = recipeDao.select(recipe.id)
+        //val existingRecipe = recipeDao.select(recipe.id)
+        val existingRecipe = recipeDao.select(true)
         if (existingRecipe != null) {
             recipeDao.delete(recipe)
         } else {
