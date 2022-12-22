@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.example.exampgr208.logic.models.RecipeItem
 import com.example.exampgr208.logic.models.SearchResult
 
-@Database(entities = [SearchResult::class, RecipeItem::class], version = 2)
+@Database(entities = [SearchResult::class, RecipeItem::class], version = 3)
 @TypeConverters(RecipeListConverter::class)
 abstract class RecipeDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao

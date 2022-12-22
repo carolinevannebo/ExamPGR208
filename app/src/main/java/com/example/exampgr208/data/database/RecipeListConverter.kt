@@ -8,6 +8,19 @@ import com.example.exampgr208.logic.models.RecipeItem
 class RecipeListConverter {
     @TypeConverter
     fun fromList(list: ArrayList<RecipeItem>?): String {
+        for (i in list!!.indices) {
+            val item = list[i]
+
+            if(item.id == null || item.id == 0) {
+                val lastIndex = list.lastIndex
+                item.id = lastIndex +1
+            }
+
+            if(item.isFavorite == null) {
+                item.isFavorite = false
+            }
+
+        }
         return Gson().toJson(list)
     }
 
