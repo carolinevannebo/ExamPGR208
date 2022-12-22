@@ -31,7 +31,8 @@ interface RecipeDao {
     @Query("SELECT * FROM recipes WHERE id = :id")
     fun select(id: Int): RecipeItem?
 
-    @Query("SELECT result FROM search_results WHERE search_query = :query")
+    //@Query("SELECT result FROM search_results WHERE search_query = :query")
+    @Query("SELECT * FROM recipes WHERE id IN (SELECT result FROM search_results WHERE search_query = :query)")
     fun select(query: String): List<RecipeItem>
 
 }

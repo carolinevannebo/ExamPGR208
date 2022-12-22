@@ -146,6 +146,11 @@ class RecipeBrowserFragment : Fragment() {
                             newArrayList = MainRepository().downloadAssetList(apiEndpointQuery)
                             tempArrayList.addAll(newArrayList)
 
+                            for (i in tempArrayList.indices) {
+                                val item = tempArrayList[i]
+                                item.isFavorite = false
+                            }
+
                             withContext(Dispatchers.Main) {
                                 val newAdapter = RecipeItemAdapter(this, tempArrayList, recipeDao)
                                 recyclerView.adapter = newAdapter
