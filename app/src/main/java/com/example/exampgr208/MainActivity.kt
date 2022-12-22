@@ -1,12 +1,9 @@
 package com.example.exampgr208
 
-import android.app.Application
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.example.exampgr208.data.database.DatabaseSingleton
 import com.example.exampgr208.databinding.ActivityMainBinding
 import com.example.exampgr208.ui.fragments.FavoriteFragment
 import com.example.exampgr208.ui.fragments.RecipeBrowserFragment
@@ -17,16 +14,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var fragmentManager: FragmentManager
     private lateinit var binding: ActivityMainBinding
-    //lateinit var context: Context
-    //var context: Context = this.applicationContext
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //context = applicationContext
         fragmentManager = supportFragmentManager
         binding = ActivityMainBinding.inflate(layoutInflater)
-        //context = baseContext!!
-        //super.onCreate(savedInstanceState)
         setContentView(binding.root)
         replaceFragment(RecipeBrowserFragment())
 

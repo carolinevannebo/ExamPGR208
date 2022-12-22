@@ -15,7 +15,6 @@ import com.example.exampgr208.data.database.DatabaseSingleton
 import com.example.exampgr208.data.database.RecipeDao
 import com.example.exampgr208.data.database.RecipeDatabase
 import com.example.exampgr208.logic.interfaces.OnItemClickListener
-import com.example.exampgr208.logic.models.RecipeItem
 import com.example.exampgr208.ui.adapters.SearchQueryItemAdapter
 import kotlinx.coroutines.*
 

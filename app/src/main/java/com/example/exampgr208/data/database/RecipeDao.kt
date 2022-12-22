@@ -39,16 +39,6 @@ interface RecipeDao {
     @Query("SELECT * FROM recipes WHERE is_favorite = :isFavorite")
     fun select(isFavorite: Boolean): List<RecipeItem>?
 
-    /*@Query("SELECT * FROM search_results WHERE search_query = :query")
-    fun select(query: String): LiveData<List<RecipeItem>>*/
-
-    //@Query("SELECT result FROM search_results WHERE search_query = :query")
-    //fun select(query: String): LiveData<List<RecipeItem>>
-
-   /* @Transaction
-    @Query("SELECT * FROM search_results WHERE search_query = :query")
-    fun selectWithResults(query: String): List<RecipeWithResults>
-*/
     //    fun select(query: String): List<RecipeWithResults>
     //@Query("SELECT * FROM recipes WHERE id IN (SELECT result FROM search_results WHERE search_query = :query)")
     //fun select(query: String): List<RecipeItem>

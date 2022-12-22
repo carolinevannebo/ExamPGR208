@@ -45,7 +45,6 @@ class FavoriteFragment : Fragment() {
         favoriteRecipesArrayList = arrayListOf()
 
         GlobalScope.launch(Dispatchers.IO) {
-            //favoriteRecipesArrayList = recipeDao.getAllRecipes() as ArrayList<RecipeItem>
             favoriteRecipesArrayList = recipeDao.select(true) as ArrayList<RecipeItem>
             Log.i("fav recipes", favoriteRecipesArrayList.toString())
 

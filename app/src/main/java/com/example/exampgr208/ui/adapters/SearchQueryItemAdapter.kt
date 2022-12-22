@@ -1,6 +1,5 @@
 package com.example.exampgr208.ui.adapters
 
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View

@@ -71,8 +71,6 @@ class RecipeFragment(private var recipe: RecipeItem) : Fragment() {
         labelView.text = recipe.label
         imageView.setImageBitmap(image)
 
-        Log.i("recipe values:", recipe.toString())
-
         return view
     }
 
@@ -83,11 +81,10 @@ class RecipeFragment(private var recipe: RecipeItem) : Fragment() {
     }
 
     private fun removeRecipeFromFavorites(recipe: RecipeItem) {
-        //val existingRecipe = recipeDao.select(recipe.id)
         val existingRecipe = recipeDao.select(true)
         if (existingRecipe != null) {
             recipeDao.delete(recipe)
-            Log.i("favorite removed", recipe.toString())
+            Log.i("Favorite removed", recipe.toString())
         } else {
             Log.i("Recipe not found", "The recipe with id ${recipe.id} was not found in the database")
         }
