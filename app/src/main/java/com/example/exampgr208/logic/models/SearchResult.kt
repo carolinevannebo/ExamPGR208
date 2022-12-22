@@ -1,18 +1,21 @@
 package com.example.exampgr208.logic.models
 
-import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import com.example.exampgr208.data.database.RecipeListConverter
 
-@Entity(tableName = "search_results")
+@Entity(tableName = "search_results"/*,
+    foreignKeys = [ForeignKey(entity = RecipeItem::class,
+    parentColumns = ["id"],
+    childColumns = ["result"],
+    onDelete = ForeignKey.CASCADE)]*/)
+
 data class SearchResult(
-    @PrimaryKey(autoGenerate = true)
-    @NonNull val Id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val Id: Int = 0,
     @ColumnInfo(name = "search_query") val query: String? = null,
-    @ColumnInfo(name = "result") var searchResult: ArrayList<RecipeItem>? = null
+    @ColumnInfo(name = "result") var searchResult: List<*>? = null
 ) {
     @TypeConverter
     fun getSearchResults(): String {

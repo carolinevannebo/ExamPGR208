@@ -150,6 +150,7 @@ class RecipeBrowserFragment : Fragment() {
                             for (i in tempArrayList.indices) {
                                 val item = tempArrayList[i]
                                 item.isFavorite = false
+                                item.id = i + 1
                             }
 
                             withContext(Dispatchers.Main) {
@@ -169,7 +170,7 @@ class RecipeBrowserFragment : Fragment() {
                                 }
 
                                 val lastIndex = savedSearches.lastIndex
-                                val searchResult = SearchResult(lastIndex+1, query, tempArrayList)
+                                val searchResult = SearchResult(lastIndex+1, query, tempArrayList as List<RecipeItem>)
                                 Log.i("this search result", searchResult.toString())
                                 recipeDao.insertSearchResult(searchResult)
                             }

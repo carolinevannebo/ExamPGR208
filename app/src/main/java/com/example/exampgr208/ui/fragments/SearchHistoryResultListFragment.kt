@@ -14,6 +14,7 @@ import com.example.exampgr208.data.database.DatabaseSingleton
 import com.example.exampgr208.data.database.RecipeDao
 import com.example.exampgr208.data.database.RecipeDatabase
 import com.example.exampgr208.logic.models.RecipeItem
+import com.example.exampgr208.logic.models.SearchResult
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -47,10 +48,16 @@ class SearchHistoryResultListFragment(private var searchQuery: String) : Fragmen
         val title = view.findViewById<TextView>(R.id.query_title)
         title.text = searchQuery
 
+        /*for (i in recipeList.indices) {
+            val item = recipeList[i]
+            item.isFavorite = false
+        }*/
+
         GlobalScope.launch(Dispatchers.IO) {
-            recipeList = recipeDao.select(searchQuery) as ArrayList<RecipeItem>
-            //Log.i("list from results", recipeList.toString())
-            Log.i("list from results", recipeDao.select(searchQuery).toString())
+            //recipeList = recipeDao.select(searchQuery)
+            /*val allSearchResults = recipeDao.getAllSearchResults()
+            val currentSearchResult = allSearchResults.filter { searchResult -> searchResult.query == searchQuery }
+            Log.i("list from results", currentSearchResult.toString())*/
         }
 
         //lag en liste, bruk query til å hente lista, send den til adapter

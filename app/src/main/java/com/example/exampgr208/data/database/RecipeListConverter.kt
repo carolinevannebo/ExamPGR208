@@ -7,26 +7,13 @@ import com.example.exampgr208.logic.models.RecipeItem
 
 class RecipeListConverter {
     @TypeConverter
-    fun fromList(list: ArrayList<RecipeItem>?): String {
-        /*for (i in list!!) {
-            val item = list[i]
-
-            if(item.id == null || item.id == 0) {
-                val lastIndex = list.lastIndex
-                item.id = lastIndex +1
-            }
-
-            if(item.isFavorite == null) {
-                item.isFavorite = false
-            }
-
-        }*/
+    fun fromList(list: List<*>?): String {
         return Gson().toJson(list)
     }
 
     @TypeConverter
-    fun toList(json: String): ArrayList<RecipeItem> {
-        val type = object : TypeToken<ArrayList<RecipeItem>>() {}.type
+    fun toList(json: String): List<*> {
+        val type = object : TypeToken<List<*>>() {}.type
         return Gson().fromJson(json, type)
     }
 }

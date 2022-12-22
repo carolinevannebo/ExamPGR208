@@ -1,12 +1,12 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 3,
-    "identityHash": "f7c5e749cb896b757924b1c0c21df2f6",
+    "version": 6,
+    "identityHash": "8636b073108f73dabaa5760c0daeb319",
     "entities": [
       {
         "tableName": "search_results",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `search_query` TEXT, `result` TEXT, FOREIGN KEY(`result`) REFERENCES `recipes`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `search_query` TEXT, `result` TEXT)",
         "fields": [
           {
             "fieldPath": "Id",
@@ -34,19 +34,7 @@
           "autoGenerate": true
         },
         "indices": [],
-        "foreignKeys": [
-          {
-            "table": "recipes",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "result"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
+        "foreignKeys": []
       },
       {
         "tableName": "recipes",
@@ -145,12 +133,42 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "RecipeWithResults",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER NOT NULL, `search_query` TEXT, `result` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "searchResult.Id",
+            "columnName": "Id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "searchResult.query",
+            "columnName": "search_query",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "searchResult.searchResult",
+            "columnName": "result",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f7c5e749cb896b757924b1c0c21df2f6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8636b073108f73dabaa5760c0daeb319')"
     ]
   }
 }

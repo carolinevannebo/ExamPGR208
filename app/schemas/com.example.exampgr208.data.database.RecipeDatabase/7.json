@@ -1,12 +1,12 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 3,
-    "identityHash": "f7c5e749cb896b757924b1c0c21df2f6",
+    "version": 7,
+    "identityHash": "09e2e2d443143082d805c69c6a2f9046",
     "entities": [
       {
         "tableName": "search_results",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `search_query` TEXT, `result` TEXT, FOREIGN KEY(`result`) REFERENCES `recipes`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `search_query` TEXT, `result` TEXT)",
         "fields": [
           {
             "fieldPath": "Id",
@@ -34,19 +34,7 @@
           "autoGenerate": true
         },
         "indices": [],
-        "foreignKeys": [
-          {
-            "table": "recipes",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "result"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
+        "foreignKeys": []
       },
       {
         "tableName": "recipes",
@@ -150,7 +138,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f7c5e749cb896b757924b1c0c21df2f6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '09e2e2d443143082d805c69c6a2f9046')"
     ]
   }
 }
